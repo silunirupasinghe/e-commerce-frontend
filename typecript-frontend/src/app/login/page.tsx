@@ -1,52 +1,75 @@
 'use client';
 import React from 'react';
-import { Box, Typography, TextField, Button, Link } from '@mui/material';
-import colors from '../../theme/color'; // ✅ import theme
+import { Grid, Typography, TextField, Button, Link } from '@mui/material';
 import { Google } from '@mui/icons-material';
-import { Poppins } from 'next/font/google';
+import colors from '../../theme/color';
+import { Poppins, Inter } from 'next/font/google';
 
-const LoginPage = () => {
+// Load Google Fonts
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-poppins',
+});
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-inter',
+});
+
+// ✅ Add component type
+const LoginPage: React.FC = () => {
   return (
-    <Box display="flex" height="100vh" bgcolor={colors.background}>
+    <Grid container height="100vh" bgcolor={colors.background}  >
       
       {/* Left Pane */}
-      <Box
-        flex={1}
+      <Grid
+        item size={{ xs: 12, md: 6 }}
         bgcolor="#CBE4E8"
         display="flex"
         alignItems="center"
         justifyContent="center"
       >
         <img src="/login/image.png" alt="Shopping" style={{ maxWidth: '100%', height: 'auto' }} />
-      </Box>
+      </Grid>
 
       {/* Right Pane */}
-      <Box
-        flex={1}
+      <Grid
+        item size={{ xs: 12, md: 6 }}
         p={8}
         display="flex"
         flexDirection="column"
         justifyContent="center"
         bgcolor={colors.background}
+        sx={{pl:10}}
       >
-        <Typography variant="h4" fontWeight={500} color={colors.textPrimary} sx={{fontFamily:'inter'}} gutterBottom>
+        <Typography
+          variant="h4"
+          fontWeight={500}
+          color={colors.textPrimary}
+          className={inter.className}
+          gutterBottom
+        >
           Log in to Exclusive
         </Typography>
-        <Typography variant="body2" color={colors.textPrimary} mb={2}>
+
+        <Typography
+          variant="body2"
+          color={colors.textPrimary}
+          className={inter.className}
+          mb={2}
+        >
           Enter your details below
         </Typography>
 
         <TextField
           placeholder="Email or Phone Number"
           fullWidth
-          variant="outlined"
+          variant="standard"
           sx={{
             mt: 2,
             input: { padding: '14px' },
-            '& fieldset': {
-              borderColor: colors.inputBorder,
-              borderRadius: '6px',
-            },
           }}
         />
 
@@ -54,18 +77,14 @@ const LoginPage = () => {
           placeholder="Password"
           type="password"
           fullWidth
-          variant="outlined"
+          variant="standard"
           sx={{
             mt: 2,
             input: { padding: '14px' },
-            '& fieldset': {
-              borderColor: colors.inputBorder,
-              borderRadius: '6px',
-            },
           }}
         />
 
-        <Box display="flex" justifyContent="space-between" alignItems="center" mt={2}>
+        <Grid display="flex" justifyContent="space-between" alignItems="center" mt={2}>
           <Button
             variant="contained"
             sx={{
@@ -74,15 +93,19 @@ const LoginPage = () => {
               borderRadius: '3px',
               fontWeight: 'bold',
               color: colors.textPrimary,
-              
             }}
           >
             Log In
           </Button>
-          <Link href="#" underline="hover" sx={{ color: colors.primary, fontSize: '16px', fontFamily:'Poppins' }}>
+          <Link
+            href="#"
+            underline="hover"
+            className={poppins.className}
+            sx={{ color: colors.primary, fontSize: '16px' }}
+          >
             Forget Password?
           </Link>
-        </Box>
+        </Grid>
 
         <Button
           variant="outlined"
@@ -93,13 +116,14 @@ const LoginPage = () => {
             padding: '12px',
             borderRadius: '6px',
             textTransform: 'none',
+            color: colors.textPrimary,
           }}
         >
-            <Google sx={{ mr:2}}/>
+          <Google sx={{ mr: 2 }} />
           Sign up with Google
         </Button>
-      </Box>
-    </Box>
+      </Grid>
+    </Grid>
   );
 };
 
