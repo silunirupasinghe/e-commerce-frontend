@@ -26,7 +26,7 @@ const FooterContainer = styled(Box)(({ theme }) => ({
   borderTop: "1px solid #333",
   position: "relative",
   bottom: 0,
-  width: "95%",
+  width: "90%",
   [theme.breakpoints.down("sm")]: {
     padding: theme.spacing(2),
   },
@@ -255,7 +255,7 @@ const Footer: React.FC = () => {
             <Typography variant="body2">
               Subscribe to our newsletter for the latest updates.
             </Typography>
-           <TextField
+            <TextField
               variant="outlined"
               placeholder="Enter your email"
               value={email}
