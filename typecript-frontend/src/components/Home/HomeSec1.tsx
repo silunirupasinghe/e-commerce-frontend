@@ -13,13 +13,16 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 const CarouselContainer = styled(Box)(({ theme }) => ({
   position: "relative",
   width: "100%",
-  height: "400px", 
+  height: "600px", // Increased default height for better visibility
   overflow: "hidden",
-//   margineTop: theme.spacing(8),
-//   marginBlockEnd: theme.spacing(8),
-  backgroundColor: "#1a1a1a",
+  [theme.breakpoints.down("md")]: {
+    height: "400px",
+  },
   [theme.breakpoints.down("sm")]: {
     height: "300px",
+  },
+  [theme.breakpoints.down("xs")]: {
+    height: "200px",
   },
 }));
 
@@ -40,11 +43,15 @@ const CarouselSlide = styled(Box)(({ theme }) => ({
 }));
 
 const SlideContent = styled(Box)(({ theme }) => ({
-  width: "80%",
+  width: "100%",
   height: "100%",
-
+  backgroundSize: "cover", // Ensure image covers the area
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
   display: "flex",
   flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
   [theme.breakpoints.down("sm")]: {
     padding: theme.spacing(2),
   },
@@ -56,8 +63,12 @@ const CarouselDots = styled(Box)(({ theme }) => ({
   left: "50%",
   transform: "translateX(-50%)",
   display: "flex",
-  gap: theme.spacing(1.5),
+  gap: theme.spacing(1),
   zIndex: 1,
+  [theme.breakpoints.down("sm")]: {
+    bottom: "10px",
+    gap: theme.spacing(0.5),
+  },
 }));
 
 const CarouselDot = styled(Box)(({ theme }) => ({
@@ -75,6 +86,10 @@ const CarouselDot = styled(Box)(({ theme }) => ({
   "&:hover": {
     opacity: 0.8,
   },
+  [theme.breakpoints.down("sm")]: {
+    width: "8px",
+    height: "8px",
+  },
 }));
 
 const ArrowButton = styled(IconButton)(({ theme }) => ({
@@ -89,8 +104,15 @@ const ArrowButton = styled(IconButton)(({ theme }) => ({
   },
   transition: "all 0.3s ease",
   zIndex: 1,
+  padding: theme.spacing(1.5),
   [theme.breakpoints.down("sm")]: {
     padding: theme.spacing(1),
+  },
+  [theme.breakpoints.down("xs")]: {
+    padding: theme.spacing(0.5),
+    "& .MuiSvgIcon-root": {
+      fontSize: "1rem",
+    },
   },
 }));
 
@@ -99,10 +121,10 @@ const Carousel: React.FC = () => {
 
   const slides = [
     {
-      image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff", 
+      image: "/home/home.jpg", // Use relative path for Next.js static imports
     },
     {
-      image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e",
+      image: "https://cdn.smartslider3.com/wp-content/uploads/2018/07/createwordpressheroimage.png",
     },
     {
       image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30",
@@ -116,7 +138,7 @@ const Carousel: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
-    }, 3000); 
+    }, 3000);
     return () => clearInterval(interval);
   }, [slides.length]);
 
@@ -135,28 +157,33 @@ const Carousel: React.FC = () => {
   };
 
   return (
-    <CarouselContainer sx={{ my: 8 }}>
+    <CarouselContainer sx={{ my: { xs: 4, sm: 6, md: 8 } }}>
       {slides.map((slide, index) => (
         <CarouselSlide
           key={index}
           className={index === currentSlide ? "active" : ""}
         >
-          <SlideContent style={{ backgroundImage: `url(${slide.image})` }}>
-          </SlideContent>
+          <SlideContent
+            style={{
+              backgroundImage: `url(${slide.image})`,
+            }}
+            role="img"
+            aria-label={`Slide ${index + 1}`}
+          />
         </CarouselSlide>
       ))}
 
       {/* Navigation Arrows */}
       <ArrowButton
         onClick={handlePrev}
-        sx={{ left: "10px" }}
+        sx={{ left: { xs: "5px", sm: "10px" } }}
         aria-label="Previous Slide"
       >
         <ArrowBackIosIcon />
       </ArrowButton>
       <ArrowButton
         onClick={handleNext}
-        sx={{ right: "10px" }}
+        sx={{ right: { xs: "5px", sm: "10px" } }}
         aria-label="Next Slide"
       >
         <ArrowForwardIosIcon />
@@ -169,6 +196,7 @@ const Carousel: React.FC = () => {
             key={index}
             className={index === currentSlide ? "active" : ""}
             onClick={() => handleDotClick(index)}
+            aria-label={`Go to slide ${index + 1}`}
           />
         ))}
       </CarouselDots>
