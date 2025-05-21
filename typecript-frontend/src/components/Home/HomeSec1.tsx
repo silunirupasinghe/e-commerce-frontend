@@ -12,14 +12,15 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 // Styled Components for Carousel
 const CarouselContainer = styled(Box)(({ theme }) => ({
   position: "relative",
-  width: "100%",
-  height: "600px", // Increased default height for better visibility
+  width: "auto",
+  height: "500px", // Increased default height for better visibility
   overflow: "hidden",
   [theme.breakpoints.down("md")]: {
-    height: "400px",
+    height: "300px",
+
   },
   [theme.breakpoints.down("sm")]: {
-    height: "300px",
+    height: "200px",
   },
   [theme.breakpoints.down("xs")]: {
     height: "200px",
@@ -72,8 +73,8 @@ const CarouselDots = styled(Box)(({ theme }) => ({
 }));
 
 const CarouselDot = styled(Box)(({ theme }) => ({
-  width: "12px",
-  height: "12px",
+  width: "10px",
+  height: "10px",
   borderRadius: "50%",
   backgroundColor: "#ffffff",
   opacity: 0.5,
@@ -127,7 +128,7 @@ const Carousel: React.FC = () => {
       image: "https://cdn.smartslider3.com/wp-content/uploads/2018/07/createwordpressheroimage.png",
     },
     {
-      image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30",
+      image: "https://soliloquywp.com/wp-content/uploads/2016/09/How-to-Add-a-Homepage-Slider-in-WordPress.png",
     },
     {
       image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e",
@@ -157,7 +158,7 @@ const Carousel: React.FC = () => {
   };
 
   return (
-    <CarouselContainer sx={{ my: { xs: 4, sm: 6, md: 8 } }}>
+    <CarouselContainer sx={{ my: { xs: 4, sm: 6, md: 6 }, mx: {md:5} }}>
       {slides.map((slide, index) => (
         <CarouselSlide
           key={index}
