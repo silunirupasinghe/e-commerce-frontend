@@ -26,7 +26,7 @@ const FooterContainer = styled(Box)(({ theme }) => ({
   borderTop: "1px solid #333",
   position: "relative",
   bottom: 0,
-  width: "95%",
+
   [theme.breakpoints.down("sm")]: {
     padding: theme.spacing(2),
   },
@@ -265,7 +265,7 @@ const Footer: React.FC = () => {
                 "& .MuiInputBase-root": {
                   backgroundColor: colors.white,
                   color: "#000000",
-                  width: "300px", // Slightly wider for better usability
+                 
                   height: "36px", // Comfortable height
                   fontSize: "0.875rem", // Readable font size
                   borderRadius: "8px", // Rounded corners

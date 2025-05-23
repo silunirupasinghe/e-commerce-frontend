@@ -7,7 +7,6 @@ import {
   Card,
   CardMedia,
   CardContent,
-  CardActions,
   IconButton,
   Box,
 } from "@mui/material";
@@ -33,8 +32,14 @@ const inter = Inter({
 
 // Styled Components
 const ProductCard = styled(Card)(({ theme }) => ({
-  width: 260,
-  height: 350,
+  [theme.breakpoints.up("xs")]: {
+    width: "100%",
+    height: "auto",
+  },
+  [theme.breakpoints.up("sm")]: {
+    width: 280,
+    height: 380,
+  },
   margin: theme.spacing(2),
   position: "relative",
   textAlign: "center",
@@ -145,20 +150,31 @@ const products = [
 
 export default function HomeSec4() {
   return (
-    <div style={{ padding: "30px" }} className={poppins.className}>
+    <Box
+      sx={{
+        px: { xs: 2, sm: 4, md: 6 },
+        py: { xs: 4, sm: 5, md: 6 },
+      }}
+      className={poppins.className}
+    >
       {/* Header Section */}
       <Box
         sx={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          flexWrap: "wrap",
         }}
       >
         <HeaderSection>
           <YellowBar />
           <Typography
             variant="h6"
-            sx={{ color: colors.primary, fontWeight: 550 }}
+            sx={{
+              color: colors.primary,
+              fontWeight: 550,
+              fontSize: { xs: "1rem", sm: "1.2rem" },
+            }}
           >
             Our Products
           </Typography>
@@ -175,8 +191,13 @@ export default function HomeSec4() {
 
       <Typography
         variant="h4"
-        sx={{ fontWeight: 550, color: colors.black }}
+        sx={{
+          fontWeight: 550,
+          color: colors.black,
+          fontSize: { xs: "1.5rem", sm: "2rem" },
+        }}
         className={inter.className}
+        mb={2}
       >
         Explore Our Products
       </Typography>
@@ -184,7 +205,7 @@ export default function HomeSec4() {
       {/* Product Grid */}
       <Grid container justifyContent="center">
         {products.map((product) => (
-          <Grid key={product.id} item md={3} sm={6} xs={12}>
+          <Grid key={product.id} item xs={12} sm={6} md={3}>
             <ProductCard>
               {/* Icons */}
               <Box
@@ -224,12 +245,12 @@ export default function HomeSec4() {
               <Box
                 sx={{
                   position: "relative",
-                  height: "260px",
+                  height: { xs: 200, sm: 260 },
                   overflow: "hidden",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  backgroundColor: "#f9f9f9", // optional light background to better center images
+                  backgroundColor: "#f9f9f9",
                 }}
               >
                 <CardMedia
@@ -261,7 +282,12 @@ export default function HomeSec4() {
 
               {/* Content */}
               <CardContent sx={{ flexGrow: 1 }}>
-                <Typography variant="body1" fontWeight={500}>
+                <Typography
+                  variant="body1"
+                  fontWeight={500}
+                  noWrap
+                  sx={{ textOverflow: "ellipsis", overflow: "hidden" }}
+                >
                   {product.name}
                 </Typography>
                 <Typography sx={{ color: colors.primary }}>
@@ -280,11 +306,16 @@ export default function HomeSec4() {
       <Box textAlign="center" mt={4}>
         <Button
           variant="contained"
-          sx={{ backgroundColor: colors.primary, color: "#000", px: 4 }}
+          sx={{
+            backgroundColor: colors.primary,
+            color: colors.black,
+            px: 4,
+            fontSize: { xs: "0.9rem", sm: "1rem" },
+          }}
         >
           View All Products
         </Button>
       </Box>
-    </div>
+    </Box>
   );
 }

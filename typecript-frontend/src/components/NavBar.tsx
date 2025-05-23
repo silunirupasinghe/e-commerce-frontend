@@ -28,16 +28,14 @@ import {
   ShoppingCartOutlined,
 } from "@mui/icons-material";
 
-
 const Navbar: React.FC = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isTabletOrMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  // Simulated login state
   const isLoggedIn: boolean = true;
   const user: { name: string; avatar: string } = {
     name: "John Doe",
@@ -57,7 +55,6 @@ const Navbar: React.FC = () => {
   };
 
   const navLinks: { label: string; href: string }[] = [
-    // { label: "Home", href: "/" },
     { label: "Products", href: "/products" },
     { label: "About", href: "/about" },
     { label: "Contact Us", href: "/contact" },
@@ -68,29 +65,30 @@ const Navbar: React.FC = () => {
     <>
       <AppBar
         position="fixed"
-        sx={{ bgcolor: colors.white, px: { xs: 2, md: 4 } }}
+        sx={{ bgcolor: colors.white, px: { xs: 2, sm: 3, md: 4 }, py: 1 }}
         elevation={0}
       >
         <Toolbar
           sx={{
             justifyContent: "space-between",
             flexWrap: "wrap",
+            rowGap: 2,
             px: { xs: 0, md: 1 },
           }}
         >
-          <Typography variant="h6" fontWeight="bold" color="black" href="/">
+          <Typography variant="h6" fontWeight="bold" color="black" component="a" href="/" sx={{ textDecoration: "none" }}>
             ECART
           </Typography>
 
-          {!isMobile && (
+          {!isTabletOrMobile && (
             <Box
               sx={{
                 display: "flex",
                 alignItems: "center",
                 gap: 2,
+                flexWrap: "wrap",
               }}
             >
-              {/* Left-side Links */}
               <Box display="flex" gap={2}>
                 {navLinks.map((link) => (
                   <Button
@@ -103,20 +101,20 @@ const Navbar: React.FC = () => {
                 ))}
               </Box>
 
-              {/* Search */}
               <Box
                 sx={{
                   display: "flex",
                   alignItems: "center",
                   backgroundColor: colors.lightGray,
                   px: 1.5,
+                  borderRadius: 1,
                 }}
               >
                 <InputBase
                   placeholder="What are you looking for?"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  sx={{ mx: 2 }}
+                  sx={{ mx: 2, minWidth: 200 }}
                 />
                 <IconButton onClick={handleSearch}>
                   <SearchIcon />
@@ -132,7 +130,6 @@ const Navbar: React.FC = () => {
                 </IconButton>
               </Box>
 
-              {/* Auth Area */}
               <Box>
                 {isLoggedIn ? (
                   <>
@@ -163,8 +160,7 @@ const Navbar: React.FC = () => {
             </Box>
           )}
 
-          {/* Mobile Menu Icon */}
-          {isMobile && (
+          {isTabletOrMobile && (
             <IconButton onClick={() => setDrawerOpen(true)}>
               <MenuIcon />
             </IconButton>
@@ -176,7 +172,6 @@ const Navbar: React.FC = () => {
         <Divider sx={{ borderColor: colors.gray }} />
       </Box>
 
-      {/* Drawer for Mobile */}
       <Drawer
         anchor="right"
         open={drawerOpen}
