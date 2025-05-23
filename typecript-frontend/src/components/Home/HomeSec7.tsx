@@ -48,7 +48,7 @@ const ServiceHighlights: React.FC = () => {
           <Grid item xs={12} sm={4} key={index}>
             <Box
               sx={{
-                border: `1px dashed ${colors.primary}`,
+                border: `1px ${colors.primary}`,
                 borderRadius: 2,
                 textAlign: "center",
                 py: 4,
