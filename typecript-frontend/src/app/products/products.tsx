@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 
 import {
@@ -15,6 +16,8 @@ import {
   InputLabel,
   Slider,
   Rating,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
@@ -96,10 +99,16 @@ const products: Product[] = [
   },
 ];
 
+const MIN = 100;
+const MAX = 2000;
+
 const Products: React.FC = () => {
   const [category, setCategory] = useState<string>("");
-  const [priceRange, setPriceRange] = useState<number[]>([100, 2000]);
+  const [priceRange, setPriceRange] = useState<number[]>([MIN, MAX]);
   const [rating, setRating] = useState<number | null>(null);
+
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const filteredProducts = products
     .filter(
@@ -110,20 +119,15 @@ const Products: React.FC = () => {
     .filter((product) => !category || product.category === category);
 
   return (
-    <Box sx={{ px: { xs: 2, sm: 4, md: 6 }, py: 4, mx: { md: 2 } }}>
+    <Box sx={{ px: { md: 6 }, py: 4, mx: { md: 2 } }}>
       <Typography variant="h4" gutterBottom>
         Explore Our Products
       </Typography>
 
-      <Grid
-        sx={{ display: "flex", flexDirection: "row" }}
-        container
-        spacing={8}
-      >
+      <Grid sx={{ display: "flex", flexDirection: "row" }} container spacing={8}>
         <Grid size={{ xs: 12, md: 3 }}>
           <Box
             sx={{
-              my: 4,
               maxWidth: 300,
               p: 3,
               border: `2px solid ${colors.primary}`,
@@ -133,8 +137,6 @@ const Products: React.FC = () => {
           >
             <Typography sx={{ mb: 2 }}>Filter By :</Typography>
             <hr />
-            {/* Filter by Category */}
-
             <Typography sx={{ my: 2 }}>Filter by category :</Typography>
             <FormControl fullWidth size="small" sx={{ mb: 2 }}>
               <InputLabel id="category-filter">Filter by category</InputLabel>
@@ -152,10 +154,7 @@ const Products: React.FC = () => {
                 ))}
               </Select>
             </FormControl>
-
             <hr />
-
-            {/* Filter by Range */}
             <Typography gutterBottom sx={{ my: 2 }}>
               Filter by range:
             </Typography>
@@ -165,14 +164,27 @@ const Products: React.FC = () => {
               value={priceRange}
               onChange={(e, newValue) => setPriceRange(newValue as number[])}
               valueLabelDisplay="auto"
-              min={100}
-              max={2000}
-              sx={{ mb: 2, color: colors.primary }}
+              min={MIN}
+              max={MAX}
+              sx={{ color: colors.primary }}
             />
-
+            <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
+              <Typography
+                variant="body2"
+                onClick={() => setPriceRange([MIN, priceRange[1]])}
+                sx={{ cursor: "pointer" }}
+              >
+                {MIN} min
+              </Typography>
+              <Typography
+                variant="body2"
+                onClick={() => setPriceRange([priceRange[0], MAX])}
+                sx={{ cursor: "pointer" }}
+              >
+                {MAX} max
+              </Typography>
+            </Box>
             <hr />
-
-            {/* Filter by Rating */}
             <Typography gutterBottom sx={{ mt: 2 }}>
               Filter By Rating
             </Typography>
@@ -184,14 +196,17 @@ const Products: React.FC = () => {
           </Box>
         </Grid>
         <Grid size={{ md: 9, xs: 12 }}>
-          <Grid container spacing={2}>
+          <Grid container spacing={{ md: 2 , xs:1 }}>
             {filteredProducts.map((product) => (
-              <Grid xs={12} sm={6} md={4} key={product.id}>
+              <Grid size={{ xs: 6, sm: 6, md: 4 }} key={product.id}>
                 <Card
                   sx={{
                     position: "relative",
-                    height: 300,
-                    width: 300,
+                    height: { md: 300, xs: 300 },
+                    width: "100%",
+                    border: 0,
+                    boxShadow: "none",
+                    borderRadius: 2,
                   }}
                 >
                   {product.new && (
@@ -205,13 +220,13 @@ const Products: React.FC = () => {
                   <Box
                     sx={{
                       position: "absolute",
-                      top: 8,
-                      right: 8,
+                      top: 10,
+                      right: 10,
                       display: "flex",
                       gap: 1,
                     }}
                   >
-                    <FavoriteBorderIcon />
+                    <FavoriteBorderIcon sx={{ color: colors.red }} />
                     <VisibilityOutlinedIcon />
                   </Box>
                   <CardMedia
@@ -219,15 +234,14 @@ const Products: React.FC = () => {
                     height="200"
                     image={product.image}
                     alt={product.name}
-                    sx={{ objectFit: "contain", backgroundColor: "#f9f9f9" }}
+                    sx={{ objectFit: "contain", backgroundColor: colors.lightGray }}
                   />
                   <CardContent>
                     <Typography variant="subtitle1" fontWeight="bold" noWrap>
                       {product.name}
                     </Typography>
                     <Typography variant="body2" color={colors.primary}>
-                      LKR {product.price.toLocaleString()} |{" "}
-                      {"★".repeat(product.rating)}{" "}
+                      LKR {product.price.toLocaleString()} | {"★".repeat(product.rating)}
                       {"☆".repeat(5 - product.rating)} ({product.reviews})
                     </Typography>
                   </CardContent>

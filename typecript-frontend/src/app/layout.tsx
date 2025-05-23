@@ -2,7 +2,7 @@
 
 import React from "react";
 import Footer from "@/components/Footer"; // adjust path if needed
-import Navbar from "@/components/Navbar"; // optional
+import Navbar from "@/components/NavBar"; // optional
 
 export default function RootLayout({
   children,

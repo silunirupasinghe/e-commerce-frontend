@@ -26,7 +26,6 @@ const LoginPage: React.FC = () => {
     <Grid container height="100vh" bgcolor={colors.background} sx={{ my: 10 }}>
       {/* Left Pane */}
       <Grid
-        item
         size={{ xs: 12, md: 6 }}
         bgcolor="#CBE4E8"
         display="flex"
@@ -40,11 +39,11 @@ const LoginPage: React.FC = () => {
         />
       </Grid>
 
-      <Grid item size={{ sm: 0, md: 1 }}></Grid>
+      <Grid  size={{ sm: 0, md: 1 }}></Grid>
 
       {/* Right Pane */}
       <Grid
-        item
+        
         size={{ xs: 12, md: 5 }}
         p={{ md: 6, xs: 4 }}
         display="flex"

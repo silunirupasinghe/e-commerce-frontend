@@ -49,7 +49,7 @@ function srcset(image: string, size: number, rows = 1, cols = 1) {
   };
 }
 
-export default function NewArrivalQuilted(): JSX.Element {
+export default function NewArrivalQuilted() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 

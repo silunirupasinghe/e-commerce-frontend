@@ -182,7 +182,7 @@ const HomeSec4: React.FC = () => {
       {/* Product Grid */}
       <Grid container justifyContent="center">
         {products.map((product) => (
-          <Grid key={product.id} item xs={12} sm={6} md={3}>
+          <Grid key={product.id} size={{xs:12, sm:6, md:3}} >
             <ProductCard>
               {/* Icons */}
               <Box

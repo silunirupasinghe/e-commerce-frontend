@@ -45,7 +45,7 @@ const ServiceHighlights: React.FC = () => {
     <Box sx={{ py: 6, px: { xs: 2, md: 6 } }}>
       <Grid container spacing={4} justifyContent="center">
         {features.map((feature, index) => (
-          <Grid item xs={12} sm={4} key={index}>
+          <Grid size={{xs:12, sm:4}}key={index}>
             <Box
               sx={{
                 border: `1px ${colors.primary}`,

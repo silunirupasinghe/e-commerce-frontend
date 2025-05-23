@@ -122,13 +122,14 @@ const Carousel: React.FC = () => {
 
   const slides = [
     {
+      image: "/home/slider/slider2.jpg",
+    },
+    {
+      image: "/home/slider/slider1.jpg",
+    },
+    
+    {
       image: "/home/home.jpg", // Use relative path for Next.js static imports
-    },
-    {
-      image: "https://cdn.smartslider3.com/wp-content/uploads/2018/07/createwordpressheroimage.png",
-    },
-    {
-      image: "https://soliloquywp.com/wp-content/uploads/2016/09/How-to-Add-a-Homepage-Slider-in-WordPress.png",
     },
     {
       image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e",

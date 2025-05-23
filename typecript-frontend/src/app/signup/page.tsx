@@ -68,7 +68,7 @@ const SignupPage: React.FC = () => {
       <Grid container height="100vh" bgcolor={colors.background} sx={{ my: 10 }}>
         {/* Left Pane */}
         <Grid
-          item
+          
           size={{ xs: 12, md: 6 }}
           bgcolor="#CBE4E8"
           display="flex"
@@ -82,9 +82,9 @@ const SignupPage: React.FC = () => {
           />
         </Grid>
 
-        <Grid item size={{ sm: 0, md: 1 }}></Grid>
+        <Grid size={{ sm: 0, md: 1 }}></Grid>
 
-        <Grid item size={{ xs: 12, md: 5 }} p={{ md: 6, xs: 4 }} display="flex" flexDirection="column" justifyContent="center">
+        <Grid size={{ xs: 12, md: 5 }} p={{ md: 6, xs: 4 }} display="flex" flexDirection="column" justifyContent="center">
           <Typography
             variant="h4"
             fontWeight={500}

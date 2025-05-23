@@ -9,17 +9,17 @@ import {
   Link,
   Divider,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { styled, Theme } from "@mui/material/styles";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import colors from "@/theme/color";
-import { LinkedIn } from "@mui/icons-material";
 
-const FooterContainer = styled(Box)(({ theme }) => ({
+const FooterContainer = styled(Box)(({ theme }: { theme: Theme }) => ({
   backgroundColor: colors.black,
   color: "#ffffff",
   padding: theme.spacing(4),
@@ -32,7 +32,7 @@ const FooterContainer = styled(Box)(({ theme }) => ({
   },
 }));
 
-const FooterGrid = styled(Box)(({ theme }) => ({
+const FooterGrid = styled(Box)(({ theme }: { theme: Theme }) => ({
   display: "grid",
   gridTemplateColumns: "repeat(auto-fit, minmax(180px, 0.9fr))",
   gap: theme.spacing(3),
@@ -42,26 +42,26 @@ const FooterGrid = styled(Box)(({ theme }) => ({
   },
 }));
 
-const FooterSection = styled(Stack)(({ theme }) => ({
+const FooterSection = styled(Stack)(({ theme }: { theme: Theme }) => ({
   flexDirection: "column",
   gap: theme.spacing(1),
 }));
 
-const SocialIconButton = styled(IconButton)(({ theme }) => ({
+const SocialIconButton = styled(IconButton)(({ theme }: { theme: Theme }) => ({
   color: "#ffffff",
   "&:hover": {
     color: "#FFD700", // Hover color (yellow, matching the theme)
   },
 }));
 
-const CopyrightText = styled(Typography)(({ theme }) => ({
+const CopyrightText = styled(Typography)(({ theme }: { theme: Theme }) => ({
   textAlign: "center",
   color: "#999999",
   fontSize: "0.75rem",
   paddingTop: theme.spacing(2),
 }));
 
-const SecurityPaymentSection = styled(Stack)(({ theme }) => ({
+const SecurityPaymentSection = styled(Stack)(({ theme }: { theme: Theme }) => ({
   flexDirection: "row",
   justifyContent: "space-between",
   alignItems: "center",
@@ -89,7 +89,6 @@ const Footer: React.FC = () => {
     <FooterContainer>
       <FooterGrid>
         {/* Company Info */}
-
         <FooterSection>
           <Typography variant="h6" fontWeight="bold">
             ECART
@@ -165,18 +164,26 @@ const Footer: React.FC = () => {
             </Stack>
           </Stack>
           <Stack direction="row" spacing={1} mt={2}>
-            <SocialIconButton href="https://facebook.com" target="_blank">
-              <FacebookIcon />
-            </SocialIconButton>
-            <SocialIconButton href="https://twitter.com" target="_blank">
-              <TwitterIcon />
-            </SocialIconButton>
-            <SocialIconButton href="https://instagram.com" target="_blank">
-              <InstagramIcon />
-            </SocialIconButton>
-            <SocialIconButton href="https://instagram.com" target="_blank">
-              <LinkedIn />
-            </SocialIconButton>
+            <Link href="https://facebook.com" target="_blank" color="inherit">
+              <SocialIconButton>
+                <FacebookIcon />
+              </SocialIconButton>
+            </Link>
+            <Link href="https://twitter.com" target="_blank" color="inherit">
+              <SocialIconButton>
+                <TwitterIcon />
+              </SocialIconButton>
+            </Link>
+            <Link href="https://instagram.com" target="_blank" color="inherit">
+              <SocialIconButton>
+                <InstagramIcon />
+              </SocialIconButton>
+            </Link>
+            <Link href="https://linkedin.com" target="_blank" color="inherit">
+              <SocialIconButton>
+                <LinkedInIcon />
+              </SocialIconButton>
+            </Link>
           </Stack>
         </FooterSection>
       </FooterGrid>
@@ -209,7 +216,6 @@ const Footer: React.FC = () => {
                   sx={{ width: 75, height: 35 }}
                 />
               </Stack>
-              {/* Add more security logos as needed */}
             </Stack>
           </SecurityPaymentSection>
         </FooterSection>
@@ -240,7 +246,6 @@ const Footer: React.FC = () => {
                   alt="American Express"
                   sx={{ width: 40, height: 30 }}
                 />
-                {/* Add more payment logos as needed */}
               </Stack>
             </Stack>
           </SecurityPaymentSection>
@@ -265,10 +270,9 @@ const Footer: React.FC = () => {
                 "& .MuiInputBase-root": {
                   backgroundColor: colors.white,
                   color: "#000000",
-                 
-                  height: "36px", // Comfortable height
-                  fontSize: "0.875rem", // Readable font size
-                  borderRadius: "8px", // Rounded corners
+                  height: "36px",
+                  fontSize: "0.875rem",
+                  borderRadius: "8px",
                 },
                 "& .MuiOutlinedInput-notchedOutline": {
                   borderColor: "#ffffff",

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   Grid,
   Typography,
@@ -10,7 +11,7 @@ import {
   IconButton,
   Box,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { styled, Theme } from "@mui/material/styles";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
@@ -30,8 +31,19 @@ const inter = Inter({
   display: "swap",
 });
 
+// Interface for Product
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  rating: number;
+  reviews: number;
+  image: string;
+  new?: boolean;
+}
+
 // Styled Components
-const ProductCard = styled(Card)(({ theme }) => ({
+const ProductCard = styled(Card)(({ theme }: { theme: Theme }) => ({
   [theme.breakpoints.up("xs")]: {
     width: "100%",
     height: "auto",
@@ -54,13 +66,13 @@ const ProductCard = styled(Card)(({ theme }) => ({
   },
 }));
 
-const HeaderSection = styled("div")(({ theme }) => ({
+const HeaderSection = styled("div")(({ theme }: { theme: Theme }) => ({
   display: "flex",
   alignItems: "center",
   marginBottom: theme.spacing(2),
 }));
 
-const YellowBar = styled("div")(({ theme }) => ({
+const YellowBar = styled("div")(({ theme }: { theme: Theme }) => ({
   width: "15px",
   height: "40px",
   backgroundColor: colors.primary,
@@ -68,15 +80,14 @@ const YellowBar = styled("div")(({ theme }) => ({
   borderRadius: "5px",
 }));
 
-const AddToCartButton = styled(Button)(({ theme }) => ({
+const AddToCartButton = styled(Button)(({ theme }: { theme: Theme }) => ({
   backgroundColor: colors.black,
   color: colors.white,
   textTransform: "uppercase",
 }));
 
-const formatPrice = (price) => `LKR ${price.toLocaleString()}`;
-
-const products = [
+// Sample product data
+const products: Product[] = [
   {
     id: 1,
     name: "Breed Dry Dog Food",
@@ -148,7 +159,11 @@ const products = [
   },
 ];
 
-export default function HomeSec4() {
+// Utility function to format price
+const formatPrice = (price: number): string => `LKR ${price.toLocaleString()}`;
+
+// Component
+const HomeSec4: React.FC = () => {
   return (
     <Box
       sx={{
@@ -203,9 +218,9 @@ export default function HomeSec4() {
       </Typography>
 
       {/* Product Grid */}
-      <Grid container justifyContent="center">
+      <Grid container justifyContent="center" spacing={{ xs: 1, sm: 2, md: 2 }}>
         {products.map((product) => (
-          <Grid key={product.id} item xs={12} sm={6} md={3}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }} key={product.id}>
             <ProductCard>
               {/* Icons */}
               <Box
@@ -318,4 +333,6 @@ export default function HomeSec4() {
       </Box>
     </Box>
   );
-}
+};
+
+export default HomeSec4;
