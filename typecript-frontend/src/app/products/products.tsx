@@ -1,7 +1,7 @@
-"use client";
+'use client'
 
 import React, { useState } from "react";
-
+import Link from "next/link"; // Import Link for navigation
 import {
   Box,
   Grid,
@@ -196,56 +196,60 @@ const Products: React.FC = () => {
           </Box>
         </Grid>
         <Grid size={{ md: 9, xs: 12 }}>
-          <Grid container spacing={{ md: 2 , xs:1 }}>
+          <Grid container spacing={{ md: 2, xs: 1 }}>
             {filteredProducts.map((product) => (
               <Grid size={{ xs: 6, sm: 6, md: 4 }} key={product.id}>
-                <Card
-                  sx={{
-                    position: "relative",
-                    height: { md: 300, xs: 300 },
-                    width: "100%",
-                    border: 0,
-                    boxShadow: "none",
-                    borderRadius: 2,
-                  }}
-                >
-                  {product.new && (
-                    <Chip
-                      label="NEW"
-                      color="success"
-                      size="small"
-                      sx={{ position: "absolute", top: 8, left: 8 }}
-                    />
-                  )}
-                  <Box
+                <Link href={`/products/${product.id}`} passHref>
+                  <Card
+                  onClick={() => console.log(`Navigating to /products/${product.id}`)}
                     sx={{
-                      position: "absolute",
-                      top: 10,
-                      right: 10,
-                      display: "flex",
-                      gap: 1,
+                      position: "relative",
+                      height: { md: 300, xs: 300 },
+                      width: "100%",
+                      border: 0,
+                      boxShadow: "none",
+                      borderRadius: 2,
+                      cursor: "pointer", // Add cursor pointer for better UX
                     }}
                   >
-                    <FavoriteBorderIcon sx={{ color: colors.red }} />
-                    <VisibilityOutlinedIcon />
-                  </Box>
-                  <CardMedia
-                    component="img"
-                    height="200"
-                    image={product.image}
-                    alt={product.name}
-                    sx={{ objectFit: "contain", backgroundColor: colors.lightGray }}
-                  />
-                  <CardContent>
-                    <Typography variant="subtitle1" fontWeight="bold" noWrap>
-                      {product.name}
-                    </Typography>
-                    <Typography variant="body2" color={colors.primary}>
-                      LKR {product.price.toLocaleString()} | {"★".repeat(product.rating)}
-                      {"☆".repeat(5 - product.rating)} ({product.reviews})
-                    </Typography>
-                  </CardContent>
-                </Card>
+                    {product.new && (
+                      <Chip
+                        label="NEW"
+                        color="success"
+                        size="small"
+                        sx={{ position: "absolute", top: 8, left: 8 }}
+                      />
+                    )}
+                    <Box
+                      sx={{
+                        position: "absolute",
+                        top: 10,
+                        right: 10,
+                        display: "flex",
+                        gap: 1,
+                      }}
+                    >
+                      <FavoriteBorderIcon sx={{ color: colors.red }} />
+                      <VisibilityOutlinedIcon />
+                    </Box>
+                    <CardMedia
+                      component="img"
+                      height="200"
+                      image={product.image}
+                      alt={product.name}
+                      sx={{ objectFit: "contain", backgroundColor: colors.lightGray }}
+                    />
+                    <CardContent>
+                      <Typography variant="subtitle1" fontWeight="bold" noWrap>
+                        {product.name}
+                      </Typography>
+                      <Typography variant="body2" color={colors.primary}>
+                        LKR {product.price.toLocaleString()} | {"★".repeat(product.rating)}
+                        {"☆".repeat(5 - product.rating)} ({product.reviews})
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Link>
               </Grid>
             ))}
           </Grid>
