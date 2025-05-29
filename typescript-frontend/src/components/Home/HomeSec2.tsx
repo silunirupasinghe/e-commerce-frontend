@@ -15,6 +15,12 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import colors from "@/theme/color";
 
+// metadata
+export const metadata = {
+  title: "Flash Sales - Your E-Commerce",
+  description: "Don't miss out on our limited-time flash sales. Huge discounts on top-rated electronics and accessories.",
+};
+
 interface Product {
   image: string;
   name: string;

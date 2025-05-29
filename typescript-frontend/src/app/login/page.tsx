@@ -1,10 +1,10 @@
-"use client";
+
 import React from "react";
 import { Grid, Typography, TextField, Button, Link } from "@mui/material";
 import { Google } from "@mui/icons-material";
 import colors from "@/theme/color";
 import { Poppins, Inter } from "next/font/google";
-import { useRouter } from "next/navigation";
+
 
 // Load Google Fonts
 const poppins = Poppins({
@@ -21,7 +21,7 @@ const inter = Inter({
 
 // ✅ Add component type
 const LoginPage: React.FC = () => {
-  const router = useRouter();
+  // const router = useRouter();
   return (
     <Grid container height="100vh" bgcolor={colors.background} sx={{ my: 10 }}>
       {/* Left Pane */}

@@ -22,6 +22,8 @@ import {
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import colors from "@/theme/color";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 interface Product {
   id: number;
@@ -120,6 +122,7 @@ const Products: React.FC = () => {
 
   return (
     <Box sx={{ px: { md: 6 }, py: 4, mx: { md: 2 } }}>
+      <ToastContainer/>
       <Typography variant="h4" gutterBottom>
         Explore Our Products
       </Typography>
@@ -199,9 +202,9 @@ const Products: React.FC = () => {
           <Grid container spacing={{ md: 2, xs: 1 }}>
             {filteredProducts.map((product) => (
               <Grid size={{ xs: 6, sm: 6, md: 4 }} key={product.id}>
-                <Link href={`/products/${product.id}`} passHref>
+                <Link href={`/products/${product.id}`} passHref style={{textDecoration:'none'}}>
                   <Card
-                  onClick={() => console.log(`Navigating to /products/${product.id}`)}
+                 
                     sx={{
                       position: "relative",
                       height: { md: 300, xs: 300 },

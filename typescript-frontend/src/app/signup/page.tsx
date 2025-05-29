@@ -24,7 +24,7 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-const SignupPage: React.FC = () => {
+const SignupPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

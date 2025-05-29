@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-import { useParams } from "next/navigation";
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'next/navigation';
 import {
   Box,
   Grid,
@@ -12,14 +12,15 @@ import {
   CardMedia,
   Breadcrumbs,
   Link,
-  Chip,
-} from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
-import AssignmentReturnOutlinedIcon from "@mui/icons-material/AssignmentReturnOutlined";
-import colors from "@/theme/color";
+} from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
+import AssignmentReturnOutlinedIcon from '@mui/icons-material/AssignmentReturnOutlined';
+import colors from '@/theme/color';
+import { toast, ToastContainer } from 'react-toastify';
+
 
 interface Product {
   id: number;
@@ -43,46 +44,51 @@ interface Product {
   };
 }
 
-const products: Product[] = [
-  // Add your full mock data here or fetch from API
+export interface Review {
+  id: number;
+  buyerName: string;
+  date: string;
+  rating: number;
+  note: string;
+  avatar?: string;
+}
+
+
+
+export const products: Product[] = [
   {
     id: 1,
-    name: "Breed Dry Dog Food",
+    name: 'Breed Dry Dog Food',
     price: 100,
     rating: 3,
     reviews: 35,
-    image:
-      "https://m.media-amazon.com/images/I/716qmN6swtL._AC_UF894,1000_QL80_.jpg",
-    category: "Pet Food",
-    description: "Premium dry dog food for all breeds, packed with nutrients.",
-    features: ["High protein", "Grain-free", "Vet approved"],
-    images: [
-      "https://m.media-amazon.com/images/I/716qmN6swtL._AC_UF894,1000_QL80_.jpg",
-    ],
+    image: 'https://m.media-amazon.com/images/I/716qmN6swtL._AC_UF894,1000_QL80_.jpg',
+    category: 'Pet Food',
+    description: 'Premium dry dog food for all breeds, packed with nutrients.',
+    features: ['High protein', 'Grain-free', 'Vet approved'],
+    images: ['https://m.media-amazon.com/images/I/716qmN6swtL._AC_UF894,1000_QL80_.jpg'],
     stock: 50,
     sold: 200,
-    seller: { name: "PetLover", rating: 4.5, followers: 1200, soldItems: 5000 },
+    seller: { name: 'PetLover', rating: 4.5, followers: 1200, soldItems: 5000 },
   },
   {
     id: 2,
-    name: "Canon EOS DSLR Camera",
+    name: 'Canon EOS DSLR Camera',
     price: 1360,
     rating: 4,
     reviews: 95,
-    image:
-      "https://asia.canon/media/image/2024/07/17/3d47abeaf9574a9ba9401c6ff2ca7bb1_EOS+R5+Mark+II+%26+RF24-105mm+f4L+IS+USM+Front+Slant.png",
-    category: "Electronics",
-    description: "Professional DSLR camera with 45MP sensor and 8K video.",
-    features: ["45MP sensor", "8K video", "Fast autofocus"],
+    image: 'https://asia.canon/media/image/2024/07/17/3d47abeaf9574a9ba9401c6ff2ca7bb1_EOS+R5+Mark+II+%26+RF24-105mm+f4L+IS+USM+Front+Slant.png',
+    category: 'Electronics',
+    description: 'Professional DSLR camera with 45MP sensor and 8K video.',
+    features: ['45MP sensor', '8K video', 'Fast autofocus'],
     images: [
-      "https://asia.canon/media/image/2024/07/17/3d47abeaf9574a9ba9401c6ff2ca7bb1_EOS+R5+Mark+II+%26+RF24-105mm+f4L+IS+USM+Front+Slant.png",
-      "https://asia.canon/media/image/2024/07/17/3d47abeaf9574a9ba9401c6ff2ca7bb1_EOS+R5+Mark+II+%26+RF24-105mm+f4L+IS+USM+Front+Slant.png",
+      'https://asia.canon/media/image/2024/07/17/3d47abeaf9574a9ba9401c6ff2ca7bb1_EOS+R5+Mark+II+%26+RF24-105mm+f4L+IS+USM+Front+Slant.png',
     ],
     stock: 20,
     sold: 150,
-    seller: { name: "TechGuru", rating: 4.8, followers: 2000, soldItems: 8000 },
+    seller: { name: 'TechGuru', rating: 4.8, followers: 2000, soldItems: 8000 },
   },
-  {
+   {
     id: 3,
     name: "Curology Product Set",
     price: 1500,
@@ -170,17 +176,55 @@ const products: Product[] = [
     ],
     stock: 100,
     sold: 300,
-    seller: { name: "GamerZone", rating: 4.9, followers: 45, soldItems: 51 },
+    seller: { name: "GamerZone", rating: 4.9, followers: 45, soldItems: 51 
+    },
+  }
+];
+
+const allReviews: Review[] = [
+  {
+    id: 1,
+    buyerName: 'Janani',
+    date: 'April 1, 2025',
+    rating: 4,
+    note: 'Great product, totally worth it!, Great product, totally worth it!,Great product, totally worth it!',
+    avatar: 'https://cdn-icons-png.flaticon.com/512/219/219970.png',
+  },
+  {
+    id: 2,
+    buyerName: 'Kasun',
+    date: 'April 2, 2025',
+    rating: 5,
+    note: 'Loved the quality and service.',
+    avatar: 'https://cdn-icons-png.flaticon.com/512/219/219970.png',
+  },
+  {
+    id: 3,
+    buyerName: 'Nimali',
+    date: 'April 3, 2025',
+    rating: 4,
+    note: 'Fast delivery and great customer support.',
+    avatar: 'https://cdn-icons-png.flaticon.com/512/219/219970.png',
+  },
+  {
+    id: 4,
+    buyerName: 'Ruwan',
+    date: 'April 4, 2025',
+    rating: 3,
+    note: 'Good value but packaging could improve.',
+    avatar: 'https://cdn-icons-png.flaticon.com/512/219/219970.png',
   },
 ];
 
-const ProductPage: React.FC = () => {
+
+
+const ProductPage = () => {
   const params = useParams();
   const id = params?.id;
   const [quantity, setQuantity] = useState(1);
-  const [selectedImage, setSelectedImage] = useState<string>("");
-
-  // const { addItem } = useCartStore(); // Use if using Zustand or custom store
+  const [selectedImage, setSelectedImage] = useState<string>('');
+  const [visibleReviews, setVisibleReviews] = useState<Review[]>([]);
+  const [showAllReviews, setShowAllReviews] = useState(false);
 
   const product = products.find((p) => p.id === Number(id));
 
@@ -188,31 +232,51 @@ const ProductPage: React.FC = () => {
     if (product) {
       setSelectedImage(product.images[0]);
     }
+    setVisibleReviews(allReviews.slice(0, 2));
   }, [product]);
 
-  if (!product) {
-    return <Typography sx={{ p: 4 }}>Product not found</Typography>;
-  }
+  if (!product) return <Typography sx={{ p: 4 }}>Product not found</Typography>;
 
   const handleAddToCart = () => {
-    // addItem({ productId: String(product.id), name: product.name, price: product.price, imageUrl: product.image, quantity });
-    alert(`${product.name} added to cart!`);
+    // Get existing cart from localStorage or initialize empty array
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+    // Check if product already exists in cart
+    const existingItem = cart.find((item: any) => item.id === product.id);
+    if (existingItem) {
+      existingItem.quantity += quantity;
+    } else {
+      cart.push({ id: product.id, name: product.name, price: product.price, image: product.image, quantity });
+    }
+
+    // Save updated cart back to localStorage
+    localStorage.setItem("cart", JSON.stringify(cart));
+    
+    // alert(`${product.name} added to cart!`);
+    toast.success(`${product.name} added to cart!`);
+
+  };
+
+  const loadAllReviews = () => {
+    setVisibleReviews(allReviews);
+    setShowAllReviews(true);
   };
 
   return (
-    <Box sx={{ p: 4 }}>
+    <Box sx={{ p: { md: 4, xs: 1 } }}>
+      <ToastContainer />
       {/* Breadcrumbs */}
       <Breadcrumbs sx={{ mb: 2 }}>
         <Link href="/">Home</Link>
-        <Link href={`/products`}>{product.category}</Link>
+        <Link href="/products">{product.category}</Link>
         <Typography color="text.primary">{product.name}</Typography>
       </Breadcrumbs>
 
+      {/* Product Section */}
       <Grid container spacing={4}>
-        {/* Images */}
-        <Grid size={{ xs: 12, md: 6 }}>
-          <Box sx={{ display: "flex", gap: 2 }}>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+        <Grid size={{xs:12, md:6}} >
+          <Box sx={{ display: 'flex' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
               {product.images.map((img, index) => (
                 <CardMedia
                   key={index}
@@ -220,14 +284,11 @@ const ProductPage: React.FC = () => {
                   image={img}
                   alt={`${product.name} ${index + 1}`}
                   sx={{
-                    width: 80,
-                    height: 80,
-                    objectFit: "contain",
-                    cursor: "pointer",
-                    border:
-                      selectedImage === img
-                        ? `2px solid ${colors.primary}`
-                        : "none",
+                    width: { md: 80, xs: 40 },
+                    height: { md: 80, xs: 40 },
+                    objectFit: 'contain',
+                    cursor: 'pointer',
+                    border: selectedImage === img ? `2px solid ${colors.primary}` : 'none',
                   }}
                   onClick={() => setSelectedImage(img)}
                 />
@@ -237,24 +298,20 @@ const ProductPage: React.FC = () => {
               component="img"
               image={selectedImage}
               alt={product.name}
-              sx={{ width: "100%", height: 300, objectFit: "contain" }}
+              sx={{ width: { md: '100%', xs: 250 }, height: 300, objectFit: 'contain' }}
             />
           </Box>
         </Grid>
 
-        {/* Details */}
-        <Grid size={{ xs: 12, md: 6 }}>
+        <Grid size={{xs:12, md:6}}>
           <Typography variant="h5" fontWeight="bold">
             {product.name}
           </Typography>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1, my: 1 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, my: 1 }}>
             <Rating value={product.rating} readOnly precision={0.5} />
             <Typography variant="body2">({product.reviews} Reviews)</Typography>
-            <Typography
-              variant="body2"
-              color={product.stock > 0 ? "green" : "red"}
-            >
-              {product.stock > 0 ? "In Stock" : "Out of Stock"}
+            <Typography variant="body2" color={product.stock > 0 ? 'green' : 'red'}>
+              {product.stock > 0 ? 'In Stock' : 'Out of Stock'}
             </Typography>
           </Box>
           <Typography variant="h6" color={colors.primary}>
@@ -263,39 +320,28 @@ const ProductPage: React.FC = () => {
           <Typography variant="body2" sx={{ my: 2 }}>
             {product.description}
           </Typography>
-
-          <Box sx={{ mb: 2 }}>
-            {product.features.map((feature, index) => (
-              <Typography key={index} variant="body2">
-                • {feature}
-              </Typography>
-            ))}
-          </Box>
+          {product.features.map((feature, i) => (
+            <Typography key={i} variant="body2">
+              • {feature}
+            </Typography>
+          ))}
 
           {/* Quantity */}
-          <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 2 }}>
-            <IconButton
-              onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
-              disabled={quantity <= 1}
-            >
-              <RemoveIcon />
+          <Box sx={{ display: 'flex', alignItems: 'center', mt: 2, mb: 2 }}>
+            <IconButton onClick={() => setQuantity((q) => Math.max(1, q - 1))}>
+              <RemoveIcon sx={{ border: 1, p: 1 }} />
             </IconButton>
-            <Typography>{quantity}</Typography>
-            <IconButton
-              onClick={() =>
-                setQuantity((prev) => Math.min(product.stock, prev + 1))
-              }
-              disabled={quantity >= product.stock}
-            >
-              <AddIcon />
+            <Typography sx={{ border: 1, px: 5, py: 1 }}>{quantity}</Typography>
+            <IconButton onClick={() => setQuantity((q) => Math.min(product.stock, q + 1))}>
+              <AddIcon sx={{ backgroundColor: colors.primary, p: 1 }} />
             </IconButton>
           </Box>
 
           {/* Actions */}
-          <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
+          <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
             <Button
               variant="contained"
-              sx={{ backgroundColor: colors.yellow, color: "black" }}
+              sx={{ backgroundColor: colors.primary, color: 'black' }}
               onClick={handleAddToCart}
               disabled={product.stock === 0}
             >
@@ -306,23 +352,21 @@ const ProductPage: React.FC = () => {
             </IconButton>
           </Box>
 
-          {/* Delivery & Returns */}
-          <Box sx={{ border: "1px solid #ddd", p: 2, borderRadius: 1 }}>
-            <Box sx={{ display: "flex", gap: 1, mb: 1 }}>
+          {/* Delivery */}
+          <Box sx={{  display:{md:'flex'}, flexDirection:"row", gap: 2, }}>
+            <Box sx={{ border: '1px solid #ddd', p: 2, borderRadius: 1, display: 'flex',  mb:2}}>
               <LocalShippingOutlinedIcon />
-              <Typography variant="body2">
-                Free Delivery
-                <br />
+              <Typography variant="body2" sx={{ml:2}}>
+                Free Delivery <br />
                 <Link href="#" color={colors.primary}>
                   Check availability
                 </Link>
               </Typography>
             </Box>
-            <Box sx={{ display: "flex", gap: 1 }}>
+            <Box sx={{ border: '1px solid #ddd', p: 2, borderRadius: 1,display: 'flex', mb:2}}>
               <AssignmentReturnOutlinedIcon />
-              <Typography variant="body2">
-                30-day Return Policy
-                <br />
+              <Typography variant="body2" sx={{ml:2}}>
+                Free 30-days Return Policy <br />
                 <Link href="#" color={colors.primary}>
                   Learn more
                 </Link>
@@ -332,30 +376,24 @@ const ProductPage: React.FC = () => {
         </Grid>
       </Grid>
 
-      {/* Seller and Reviews Section */}
+      {/* Seller and Reviews */}
       <Box sx={{ mt: 6 }}>
-        {/* Seller Info */}
-        <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 2 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
           <Box
             component="img"
             src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
             alt="Seller"
-            sx={{ width: 50, height: 50, borderRadius: "50%" }}
+            sx={{ width: 50, height: 50, borderRadius: '50%' }}
           />
           <Box>
             <Typography variant="subtitle1" fontWeight="bold">
               {product.seller.name}
             </Typography>
             <Typography variant="body2">
-              {product.seller.followers} Followers | {product.seller.soldItems}
-              K+ Sold
+              {product.seller.followers} Followers | {product.seller.soldItems}K+ Sold
             </Typography>
             <Rating value={product.seller.rating} readOnly precision={0.5} />
-            <Button
-              variant="outlined"
-              size="small"
-              sx={{ mt: 1, borderRadius: 8, textTransform: "none" }}
-            >
+            <Button variant="outlined" size="small" sx={{ mt: 1, borderRadius: 8 }}>
               Follow
             </Button>
           </Box>
@@ -363,66 +401,58 @@ const ProductPage: React.FC = () => {
 
         {/* Review Summary */}
         <Typography variant="subtitle1" fontWeight="bold" sx={{ mb: 1 }}>
-          {product.reviews} reviews | {product.rating.toFixed(1)}{" "}
-          <Rating
-            value={product.rating}
-            readOnly
-            precision={0.5}
-            size="small"
-            sx={{ verticalAlign: "middle" }}
-          />
+          {product.reviews} reviews | {product.rating.toFixed(1)}{' '}
+          <Rating value={product.rating} readOnly precision={0.5} size="small" />
         </Typography>
 
-        {/* Mock Review Cards */}
-        {[1, 2].map((review, index) => (
+        {/* Review Cards */}
+        {/* <Box sx={{display: 'flex', flexDirection: 'row', gap: 2, mb: 4}}> */}
+          {visibleReviews.map((review) => (
           <Box
-            key={index}
+            key={review.id}
             sx={{
               backgroundColor: colors.lightGray,
               borderRadius: 2,
               p: 2,
               mb: 2,
-              display: "flex",
-              alignItems: "flex-start",
+              display: 'flex',
+              alignItems: 'flex-start',
               gap: 2,
             }}
           >
             <Box
               component="img"
-              src="https://cdn-icons-png.flaticon.com/512/219/219970.png"
+              src={review.avatar}
               alt="Buyer"
-              sx={{ width: 40, height: 40, borderRadius: "50%" }}
+              sx={{ width: 40, height: 40, borderRadius: '50%' }}
             />
             <Box>
               <Typography fontWeight="bold" variant="body2">
-                Buyer name
+                {review.buyerName}
               </Typography>
               <Typography variant="caption" color="text.secondary">
-                on April 2, 2025
+                on {review.date}
               </Typography>
-              <Rating value={product.rating} readOnly size="small" />
+              <Rating value={review.rating} readOnly size="small" />
               <Typography variant="body2" sx={{ mt: 0.5 }}>
-                Product review note
+                {review.note}
               </Typography>
             </Box>
           </Box>
         ))}
 
-        {/* See All Reviews Button */}
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <Button
-            variant="outlined"
-            sx={{
-              mt: 2,
-              px: 4,
-              borderRadius: 10,
-              textTransform: "none",
-              fontWeight: 500,
-            }}
-          >
-            See All Reviews
-          </Button>
-        </Box>
+        {/* Load More Button */}
+        {!showAllReviews && (
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Button
+              variant="outlined"
+              onClick={loadAllReviews}
+              sx={{ mt: 2, px: 4, borderRadius: 10, textTransform: 'none' }}
+            >
+              See All Reviews
+            </Button>
+          </Box>
+        )}
       </Box>
     </Box>
   );

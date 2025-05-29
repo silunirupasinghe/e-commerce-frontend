@@ -22,9 +22,11 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
 import colors from "@/theme/color";
+import Link from "next/link";
+
 import {
   FavoriteBorderOutlined,
-  PersonOffOutlined,
+  PersonOutline,
   ShoppingCartOutlined,
 } from "@mui/icons-material";
 
@@ -141,8 +143,8 @@ const Navbar: React.FC = () => {
                       open={Boolean(anchorEl)}
                       onClose={handleMenuClose}
                     >
-                      <MenuItem onClick={handleMenuClose}>
-                        <PersonOffOutlined /> Profile
+                      <MenuItem href="/profile" component={Link} >
+                        <PersonOutline /> Profile
                       </MenuItem>
                       <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
                     </Menu>

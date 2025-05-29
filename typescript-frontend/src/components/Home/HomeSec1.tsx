@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import {
   Box,
-  Typography,
   IconButton,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
@@ -117,7 +116,7 @@ const ArrowButton = styled(IconButton)(({ theme }) => ({
   },
 }));
 
-const Carousel: React.FC = () => {
+const Carousel= () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const slides = [
@@ -127,9 +126,8 @@ const Carousel: React.FC = () => {
     {
       image: "/home/slider/slider1.jpg",
     },
-    
     {
-      image: "/home/home.jpg", // Use relative path for Next.js static imports
+      image: "/home/home.jpg",
     },
     {
       image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e",
@@ -205,5 +203,7 @@ const Carousel: React.FC = () => {
     </CarouselContainer>
   );
 };
+ 
+ 
 
 export default Carousel;
