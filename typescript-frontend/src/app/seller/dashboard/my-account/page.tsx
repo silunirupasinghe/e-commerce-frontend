@@ -58,12 +58,11 @@ export default function EditProfilePage() {
       {/* Header */}
       <Box
         sx={{
-          p: 2,
           borderRadius: 1,
           mb: 3,
         }}
       >
-        <Typography variant="h6" sx={{ color: colors.primary }}>
+        <Typography variant="h6" sx={{ color: colors.primary, fontFamily: "Poppins, sans-serif" }}>
           Edit Your Profile
         </Typography>
       </Box>
@@ -113,7 +112,7 @@ export default function EditProfilePage() {
 
       {/* Password Section */}
       <Divider sx={{ my: 3 }} />
-      <Typography variant="h6" gutterBottom sx={{ color: colors.primary }}>
+      <Typography variant="h6" gutterBottom sx={{ color: colors.primary, fontFamily: "Poppins, sans-serif" }}>
         Password Changes
       </Typography>
       <TextField

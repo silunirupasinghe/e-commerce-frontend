@@ -1,4 +1,3 @@
-// ProfileLayout.tsx
 "use client";
 import { ReactNode, useState } from "react";
 import {
@@ -11,7 +10,11 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import Sidebar from "./sidebar";
 
-export default function ProfileLayout({ children }: { children: ReactNode }) {
+interface LayoutProps {
+  children: ReactNode;
+}
+
+export default function Layout({ children }: LayoutProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -21,7 +24,7 @@ export default function ProfileLayout({ children }: { children: ReactNode }) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  
+
   return (
     <Box sx={{ display: "flex", minHeight: "calc(100vh - 64px - 80px)" }}>
       {/* Mobile Menu Toggle */}
@@ -35,9 +38,9 @@ export default function ProfileLayout({ children }: { children: ReactNode }) {
             top: 16,
             left: 16,
             zIndex: theme.zIndex.drawer + 1,
-            padding: 0.5, // Reduced padding for smaller size
+            padding: 0.5,
             "& .MuiSvgIcon-root": {
-              fontSize: "24px", // Reduced icon size (default is 24px, adjust as needed)
+              fontSize: "24px",
             },
           }}
         >
@@ -50,7 +53,7 @@ export default function ProfileLayout({ children }: { children: ReactNode }) {
         sx={{
           width: drawerWidth,
           flexShrink: 0,
-          display: isMobile ? "none" : "block", // Hide on mobile unless toggled
+          display: isMobile ? "none" : "block",
         }}
       >
         <Drawer
@@ -60,7 +63,7 @@ export default function ProfileLayout({ children }: { children: ReactNode }) {
           sx={{
             "& .MuiDrawer-paper": {
               width: drawerWidth,
-              position: isMobile ? "fixed" : "relative", // Make it scrollable on desktop
+              position: isMobile ? "fixed" : "relative",
             },
           }}
         >
@@ -74,7 +77,7 @@ export default function ProfileLayout({ children }: { children: ReactNode }) {
         sx={{
           flexGrow: 1,
           p: 3,
-          paddingBottom: "80px", // Adjust this value based on your footer's height
+          paddingBottom: "80px",
         }}
       >
         {children}

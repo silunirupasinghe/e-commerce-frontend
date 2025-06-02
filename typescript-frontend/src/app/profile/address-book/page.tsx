@@ -12,9 +12,9 @@ import {
   DialogContent,
   DialogActions,
 } from "@mui/material";
-import { ContentCopy, Edit } from "@mui/icons-material";
+import { ContentCopy, Edit, Lock } from "@mui/icons-material";
 import colors from "@/theme/color";
-import Sidebar from "./sidebar";
+
 
 export default function ProfilePage() {
   const [addresses, setAddresses] = useState([
@@ -68,18 +68,34 @@ export default function ProfilePage() {
   };
 
   return (
+    <Box
+      sx={{
+        px: { md: 10, xs: 2 },
+        py: { md: 4, xs: 2 },
+        maxWidth: 800,
+        mx: { md: "auto", xs: "0" },
+        bgcolor: "#fff",
+        borderRadius: 2,
+        boxShadow: 1,
+      }}
+    >
     <Box sx={{ p: 4 }}>
       <Typography
         variant="h6"
-        gutterBottom
         sx={{ color: colors.primary, cursor: "pointer" }}
         onClick={handleOpenDialog}
       >
         + Add a new address
       </Typography>
-      <Typography variant="body2" color="textSecondary" gutterBottom>
+      
+      <Box sx={{display: "flex", gap:1}}>
+        <Lock size={"small"} sx={{color:colors.green}}  />
+        <Typography variant="body2" sx={{color:colors.green}} gutterBottom>
         All data will be encrypted
       </Typography>
+
+      </Box>
+      
 
       {/* Dialog for adding new address */}
       <Dialog open={openDialog} onClose={handleCloseDialog}>
@@ -133,7 +149,7 @@ export default function ProfilePage() {
             border: "1px solid",
             borderColor: "grey.300",
             borderRadius: 1,
-            mb: 2,
+            my: 2,
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
@@ -163,6 +179,7 @@ export default function ProfilePage() {
           </Box>
         </Box>
       ))}
+    </Box>
     </Box>
   );
 }

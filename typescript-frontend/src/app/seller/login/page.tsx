@@ -20,20 +20,19 @@ const inter = Inter({
 });
 
 // ✅ Add component type
-const LoginPage = () => {
+const Page= () => {
   // const router = useRouter();
   return (
-    <Grid container height="100vh" bgcolor={colors.background} sx={{ my: 10 }}>
+    <Grid container height="120vh" bgcolor={colors.background} sx={{ my: 2 }}>
       {/* Left Pane */}
       <Grid
         size={{ xs: 12, md: 6 }}
-        bgcolor="#CBE4E8"
         display="flex"
         alignItems="center"
         justifyContent="center"
       >
         <img
-          src="/login/image.png"
+          src="/seller/login/login.jpg"
           alt="Shopping"
           style={{ maxWidth: "100%", height: "auto" }}
         />
@@ -43,22 +42,24 @@ const LoginPage = () => {
 
       {/* Right Pane */}
       <Grid
-        
         size={{ xs: 12, md: 5 }}
-        p={{ md: 6, xs: 4 }}
         display="flex"
         flexDirection="column"
         justifyContent="center"
         bgcolor={colors.background}
+        paddingRight={{ md: 12, xs: 2 }}
+        paddingBottom={{ md: 10, xs: 2 }}
+      
       >
         <Typography
           variant="h4"
-          fontWeight={500}
+          fontWeight={530}
+          fontSize={{ xs: "1.5rem", md: "2.5rem" }}
           color={colors.textPrimary}
           className={inter.className}
           gutterBottom
         >
-          Log in to Exclusive
+          Login to Ecart
         </Typography>
 
         <Typography
@@ -105,9 +106,10 @@ const LoginPage = () => {
               borderRadius: "3px",
               fontWeight: "bold",
               textTransform: "none",
-              color: colors.textPrimary,
+              color: colors.black,
+              boxShadow: "none",
+              width: "200px",    
             }}
-            // onClick={ () => router.push('/signup')}
           >
             Log In
           </Button>
@@ -148,7 +150,7 @@ const LoginPage = () => {
         >
           Don’t have account?{" "}
           <Link
-            href="/signup"
+            href="/seller/"
             underline="hover"
             sx={{ color: colors.primary, fontWeight: 800 }}
           >
@@ -160,4 +162,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default Page;
