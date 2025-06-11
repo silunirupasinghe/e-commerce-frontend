@@ -50,96 +50,83 @@ const FilterContainer = styled("div")(({ theme }) => ({
   marginBottom: theme.spacing(2),
 }));
 
-const ProcessingOrders: React.FC = () => {
-  const [statusFilter, setStatusFilter] = useState<string>("Processing"); // Default to Processing
+const ShippedOrders: React.FC = () => {
+  const [statusFilter, setStatusFilter] = useState<string>("Shipped"); // Default to Shipped
   const [paymentFilter, setPaymentFilter] = useState<string>("All"); // Default to All for payment status
 
   const orders: Order[] = [
     {
-      id: "#021",
+      id: "#022",
       date: "25-04-2025",
       customer: "John Doe",
       details: "model view",
       total: "Rs. 5,000",
-      status: "Processing",
+      status: "Shipped",
       payment: "Paid",
     },
     {
-      id: "#021",
+      id: "#023",
       date: "25-04-2025",
       customer: "John Doe",
       details: "model view",
       total: "Rs. 5,000",
-      status: "Processing",
+      status: "Shipped",
       payment: "Payment Pending",
     },
     {
-      id: "#021",
+      id: "#024",
       date: "25-04-2025",
       customer: "John Doe",
       details: "model view",
       total: "Rs. 5,000",
-      status: "Processing",
+      status: "Shipped",
       payment: "Payment Pending",
     },
     {
-      id: "#021",
+      id: "#025",
       date: "25-04-2025",
       customer: "John Doe",
       details: "model view",
       total: "Rs. 5,000",
-      status: "Processing",
+      status: "Shipped",
       payment: "Paid",
     },
     {
-      id: "#021",
+      id: "#026",
       date: "25-04-2025",
       customer: "John Doe",
       details: "model view",
       total: "Rs. 5,000",
-      status: "Processing",
-      payment: "Paid",
-    },
-    {
-      id: "#021",
-      date: "25-04-2025",
-      customer: "John Doe",
-      details: "model view",
-      total: "Rs. 5,000",
-      status: "Processing",
-      payment: "Paid",
+      status: "Shipped",
+      payment: "Payment Pending",
     },
   ];
 
-  const getPaymentColor = (payment: Order["payment"]): string => {
-    switch (payment) {
-      case "Paid":
-        return "#f44336"; // Orange
-      case "Payment Pending":
+  const getStatusColor = (status: Order["status"]): string => {
+    switch (status) {
+      case "Processing":
+        return "#ff9800"; // Orange
+      case "Shipped":
         return "#4caf50"; // Green
+      case "Delivered":
+        return "#4caf50"; // Green
+      case "Return":
+        return "#f44336"; // Red
       default:
         return "inherit";
     }
   };
 
   const filteredOrders: Order[] = orders.filter((order) => {
-    const matchesPayment =
-      paymentFilter === "All" || order.payment === paymentFilter;
-    return matchesPayment;
+    const matchesStatus = statusFilter === "All" || order.status === statusFilter;
+    const matchesPayment = paymentFilter === "All" || order.payment === paymentFilter;
+    return matchesStatus && matchesPayment;
   });
 
   return (
     <StyledPaper elevation={3}>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          px: 2,
-          mt: 2,
-        }}
-      >
-        <Header>Processing Orders</Header>
+      <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between", px: 2, mt: 2 }}>
+        <Header>Shipped Orders</Header>
         <FilterContainer>
           <TextField
             variant="outlined"
@@ -153,7 +140,20 @@ const ProcessingOrders: React.FC = () => {
             }}
             sx={{ width: "300px" }}
           />
-
+          <FormControl sx={{ width: "200px" }}>
+            <InputLabel>Status</InputLabel>
+            <Select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value as string)}
+              label="Status"
+            >
+              <MenuItem value="All">All</MenuItem>
+              <MenuItem value="Processing">Processing</MenuItem>
+              <MenuItem value="Shipped">Shipped</MenuItem>
+              <MenuItem value="Delivered">Delivered</MenuItem>
+              <MenuItem value="Return">Return</MenuItem>
+            </Select>
+          </FormControl>
           <FormControl sx={{ width: "200px" }}>
             <InputLabel>Payment Status</InputLabel>
             <Select
@@ -189,12 +189,12 @@ const ProcessingOrders: React.FC = () => {
                 <TableCell>{order.customer}</TableCell>
                 <TableCell>{order.details}</TableCell>
                 <TableCell>{order.total}</TableCell>
-                <TableCell> {order.status} </TableCell>
                 <TableCell>
-                  <span style={{ color: getPaymentColor(order.payment) }}>
-                    {order.payment}
+                  <span style={{ color: getStatusColor(order.status) }}>
+                    {order.status}
                   </span>
                 </TableCell>
+                <TableCell>{order.payment}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -204,4 +204,4 @@ const ProcessingOrders: React.FC = () => {
   );
 };
 
-export default ProcessingOrders;
+export default ShippedOrders;

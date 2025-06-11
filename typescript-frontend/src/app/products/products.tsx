@@ -1,7 +1,7 @@
 'use client'
 
-import React, { useState } from "react";
-import Link from "next/link"; // Import Link for navigation
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import {
   Box,
   Grid,
@@ -18,8 +18,10 @@ import {
   Rating,
   useMediaQuery,
   useTheme,
+  IconButton,
 } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import colors from "@/theme/color";
 import { ToastContainer, toast } from "react-toastify";
@@ -108,9 +110,33 @@ const Products: React.FC = () => {
   const [category, setCategory] = useState<string>("");
   const [priceRange, setPriceRange] = useState<number[]>([MIN, MAX]);
   const [rating, setRating] = useState<number | null>(null);
+  const [wishlist, setWishlist] = useState<Product[]>([]);
 
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  useEffect(() => {
+    const storedWishlist = localStorage.getItem("wishlist");
+    if (storedWishlist) {
+      setWishlist(JSON.parse(storedWishlist));
+    }
+  }, []);
+
+  const handleWishlistToggle = (product: Product) => {
+    let updatedWishlist = [...wishlist];
+    const isInWishlist = wishlist.some((item) => item.id === product.id);
+
+    if (isInWishlist) {
+      updatedWishlist = updatedWishlist.filter((item) => item.id !== product.id);
+      toast.info(`${product.name} removed from wishlist`);
+    } else {
+      updatedWishlist = [...updatedWishlist, product];
+      toast.success(`${product.name} added to wishlist`);
+    }
+
+    setWishlist(updatedWishlist);
+    localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+  };
 
   const filteredProducts = products
     .filter(
@@ -122,7 +148,7 @@ const Products: React.FC = () => {
 
   return (
     <Box sx={{ px: { md: 6 }, py: 4, mx: { md: 2 } }}>
-      <ToastContainer/>
+      <ToastContainer />
       <Typography variant="h4" gutterBottom>
         Explore Our Products
       </Typography>
@@ -202,9 +228,8 @@ const Products: React.FC = () => {
           <Grid container spacing={{ md: 2, xs: 1 }}>
             {filteredProducts.map((product) => (
               <Grid size={{ xs: 6, sm: 6, md: 4 }} key={product.id}>
-                <Link href={`/products/${product.id}`} passHref style={{textDecoration:'none'}}>
+                <Link href={`/products/${product.id}`} passHref style={{ textDecoration: 'none' }}>
                   <Card
-                 
                     sx={{
                       position: "relative",
                       height: { md: 300, xs: 300 },
@@ -212,7 +237,7 @@ const Products: React.FC = () => {
                       border: 0,
                       boxShadow: "none",
                       borderRadius: 2,
-                      cursor: "pointer", // Add cursor pointer for better UX
+                      cursor: "pointer",
                     }}
                   >
                     {product.new && (
@@ -232,7 +257,19 @@ const Products: React.FC = () => {
                         gap: 1,
                       }}
                     >
-                      <FavoriteBorderIcon sx={{ color: colors.red }} />
+                      <IconButton
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleWishlistToggle(product);
+                        }}
+                        sx={{ color: colors.red }}
+                      >
+                        {wishlist.some((item) => item.id === product.id) ? (
+                          <FavoriteIcon />
+                        ) : (
+                          <FavoriteBorderIcon />
+                        )}
+                      </IconButton>
                       <VisibilityOutlinedIcon />
                     </Box>
                     <CardMedia
