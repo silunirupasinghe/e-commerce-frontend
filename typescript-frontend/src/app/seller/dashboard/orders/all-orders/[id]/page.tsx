@@ -389,13 +389,12 @@ const OrderDetail: React.FC = () => {
 
       <Grid sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
         {/* customer details and item summary  */}
-        <Grid size={{ xs: 12, md: 8 }}
-         
+        <Grid size={{  xs: 12}} 
           gap={2}
           sx={{
             display: "flex",
             mb: 2,
-            flexDirection: { xs: "column", md: "column" },
+            flexDirection: "column",
           }}
         >
           {/* customer details and address */}
@@ -481,7 +480,7 @@ const OrderDetail: React.FC = () => {
         </Grid>
 
         {/* order history section and order summary */}
-        <Grid size={{ xs: 12, md: 4 }}
+        <Grid 
           sx={{
             display: "flex",
             flexDirection: "row",
@@ -491,6 +490,7 @@ const OrderDetail: React.FC = () => {
           }}
           gap={2}
         >
+          {/* order history */}
           <Grid>
             <EditableHistory
               history={order.history}
