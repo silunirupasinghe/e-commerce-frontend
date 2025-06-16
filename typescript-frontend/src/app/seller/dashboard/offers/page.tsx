@@ -29,6 +29,7 @@ import FilterListOutlinedIcon from '@mui/icons-material/FilterListOutlined';
 import PercentOutlinedIcon from '@mui/icons-material/PercentOutlined';
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined';
+import { useRouter } from "next/navigation";
 // import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined'; // Remove
 
 interface Offer {
@@ -42,6 +43,7 @@ interface Offer {
 }
 
 const OffersPage = () => {
+  const router = useRouter();
   const [originalOffers, setOriginalOffers] = useState<Offer[]>([
     {
       id: 'D0001',
@@ -96,7 +98,7 @@ const [offers, setOffers] = useState(originalOffers);
   };
 
   const handleAddOffer = () => {
-    toast.success('Offer added successfully!');
+   router.push("/seller/dashboard/offers/create-offers");
   };
 
   // Remove chatbot-related state and handlers
