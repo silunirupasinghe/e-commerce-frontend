@@ -1,4 +1,3 @@
-// pages/OffersPage.tsx
 "use client";
 import { useState } from "react";
 import {
@@ -36,7 +35,7 @@ interface Offer {
   id: string;
   title: string;
   status: string;
-  products: string;
+  products: string | string[];
   startDate: string;
   endDate: string;
   usage: number;
@@ -73,7 +72,7 @@ const OffersPage = () => {
       usage: 12,
     },
   ]);
-const [offers, setOffers] = useState(originalOffers);
+  const [offers, setOffers] = useState(originalOffers);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -98,28 +97,18 @@ const [offers, setOffers] = useState(originalOffers);
   };
 
   const handleAddOffer = () => {
-   router.push("/seller/dashboard/offers/create-offers");
+    router.push("/seller/dashboard/offers/create-offers");
   };
 
-  // Remove chatbot-related state and handlers
-  // const [isChatOpen, setIsChatOpen] = useState(false);
-  // const [messages, setMessages] = useState<string[]>([]);
-  // const [newMessage, setNewMessage] = useState('');
-  // const handleChatToggle = () => {
-  //   setIsChatOpen(!isChatOpen);
-  // };
-  // const handleSendMessage = () => {
-  //   if (newMessage.trim()) {
-  //     setMessages([...messages, newMessage]);
-  //     setNewMessage('');
-  //   }
-  // };
+  // Calculate total offers and total usage
+  const totalOffers = originalOffers.length;
+  const totalUsage = originalOffers.reduce((sum, offer) => sum + offer.usage, 0);
 
   return (
     <Box sx={{ alignItems: 'center', minHeight: '100vh' }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 4 }}>
         <Box sx={{ p: 3 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 4 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
             <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 2 }}>
               <Link underline="hover" color="black" href="/">
                 Home
@@ -198,7 +187,7 @@ const [offers, setOffers] = useState(originalOffers);
             </Grid>
           </Box>
 
-          <Box sx={{ paddingLeft: '130px' }}>
+          <Box sx={{ paddingLeft: '65px' }}>
             <Box
               sx={{
                 padding: 2,
@@ -212,7 +201,7 @@ const [offers, setOffers] = useState(originalOffers);
               <Grid container spacing={4} alignItems="center">
                 <Grid
                   size={{ xs: 12, sm: 5 }}
-                  sx={{ display: 'flex', alignItems: 'center', gap: 2 }}
+                  sx={{ display: 'flex', alignItems: 'center', gap: 4 }}
                 >
                   <Typography
                     variant="h6"
@@ -246,14 +235,14 @@ const [offers, setOffers] = useState(originalOffers);
                           color="textSecondary"
                           paddingLeft="20px"
                         >
-                          Active offers
+                          Total Offers
                         </Typography>
                         <Typography
                           variant="h5"
                           fontSize="20px"
                           paddingLeft="20px"
                         >
-                          2
+                          {totalOffers}
                         </Typography>
                       </Box>
                     </CardContent>
@@ -286,7 +275,7 @@ const [offers, setOffers] = useState(originalOffers);
                           fontSize="20px"
                           paddingLeft="20px"
                         >
-                          56
+                          {totalUsage}
                         </Typography>
                       </Box>
                     </CardContent>
@@ -330,7 +319,7 @@ const [offers, setOffers] = useState(originalOffers);
             </Box>
           </Box>
 
-          <Box sx={{ marginTop: '30px', width: '950px', marginLeft: '110px' }}>
+          <Box sx={{ marginTop: '30px', width: '950px', marginLeft: '70px' }}>
             <Table
               sx={{ minWidth: '100%', textAlign: 'center' }}
               aria-label="offers table"
@@ -381,7 +370,7 @@ const [offers, setOffers] = useState(originalOffers);
                         {offer.status}
                       </Typography>
                     </TableCell>
-                    <TableCell sx={{ fontSize: '13px' }}>{offer.products}</TableCell>
+                    <TableCell sx={{ fontSize: '13px' }}>{Array.isArray(offer.products) ? offer.products.join(', ') : offer.products}</TableCell>
                     <TableCell sx={{ fontSize: '15px' }}>{offer.startDate}</TableCell>
                     <TableCell>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -396,9 +385,6 @@ const [offers, setOffers] = useState(originalOffers);
             </Table>
           </Box>
 
-          {/* Remove chatbot UI */}
-          {/* <Fab ... /> */}
-          {/* {isChatOpen && <Box ... />} */}
 
           <ToastContainer />
         </Box>

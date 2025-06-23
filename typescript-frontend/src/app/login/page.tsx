@@ -1,10 +1,9 @@
-
-import React from "react";
+'use client';
+import React, { useState } from "react";
 import { Grid, Typography, TextField, Button, Link } from "@mui/material";
 import { Google } from "@mui/icons-material";
 import colors from "@/theme/color";
 import { Poppins, Inter } from "next/font/google";
-
 
 // Load Google Fonts
 const poppins = Poppins({
@@ -19,9 +18,23 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-// ✅ Add component type
 const LoginPage = () => {
-  // const router = useRouter();
+  const [emailPhone, setEmailPhone] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+  const handleLogin = () => {
+    // Simulate login success (replace with actual authentication logic)
+    if (emailPhone && password) {
+      // Store login details in localStorage
+      localStorage.setItem("userDetails", JSON.stringify({ emailPhone, password }));
+      localStorage.setItem("isLoggedIn", JSON.stringify(true));
+      console.log("Logged in successfully");
+      // Redirect or update UI as needed (e.g., using router.push if integrated)
+    } else {
+      console.log("Please fill in all fields");
+    }
+  };
+
   return (
     <Grid container height="100vh" bgcolor={colors.background} sx={{ my: 10 }}>
       {/* Left Pane */}
@@ -39,11 +52,10 @@ const LoginPage = () => {
         />
       </Grid>
 
-      <Grid  size={{ sm: 0, md: 1 }}></Grid>
+      <Grid size={{ sm: 0, md: 1 }}></Grid>
 
       {/* Right Pane */}
       <Grid
-        
         size={{ xs: 12, md: 5 }}
         p={{ md: 6, xs: 4 }}
         display="flex"
@@ -74,6 +86,8 @@ const LoginPage = () => {
           placeholder="Email or Phone Number"
           fullWidth
           variant="standard"
+          value={emailPhone}
+          onChange={(e) => setEmailPhone(e.target.value)}
           sx={{
             mt: 2,
             input: { padding: "14px" },
@@ -85,6 +99,8 @@ const LoginPage = () => {
           type="password"
           fullWidth
           variant="standard"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           sx={{
             mt: 2,
             input: { padding: "14px" },
@@ -99,6 +115,7 @@ const LoginPage = () => {
         >
           <Button
             variant="contained"
+            onClick={handleLogin}
             sx={{
               backgroundColor: colors.primary,
               padding: "12px 30px",
@@ -107,7 +124,6 @@ const LoginPage = () => {
               textTransform: "none",
               color: colors.textPrimary,
             }}
-            // onClick={ () => router.push('/signup')}
           >
             Log In
           </Button>

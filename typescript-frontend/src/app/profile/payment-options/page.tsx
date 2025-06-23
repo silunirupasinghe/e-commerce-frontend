@@ -1,4 +1,3 @@
-// PaymentMethodsPage.tsx
 "use client";
 import { useState } from "react";
 import {
@@ -14,7 +13,7 @@ import {
   DialogActions,
   TextField,
 } from "@mui/material";
-import { Lock, Edit, Delete } from "@mui/icons-material";
+import { Lock, Edit, Delete, Verified, Wallet } from "@mui/icons-material";
 import colors from "@/theme/color"; // Assuming this exists in your project
 
 // Define TypeScript interface for payment method
@@ -38,7 +37,7 @@ export default function PaymentMethodsPage() {
     {
       id: 2,
       type: "Mastercard",
-      cardNumber: "**** **** **** 3751",
+      cardNumber: "**** **** **** 1791",
       name: "John Doe",
       isDefault: false,
     },
@@ -87,7 +86,7 @@ export default function PaymentMethodsPage() {
         px: { md: 10, xs: 2 },
         py: { md: 4, xs: 2 },
         maxWidth: 800,
-        mx: { md: "auto", xs: "0" },
+        mx: "auto",
         bgcolor: "#fff",
         borderRadius: 2,
         boxShadow: 1,
@@ -99,96 +98,131 @@ export default function PaymentMethodsPage() {
           Your payment methods
         </Typography>
         <Box sx={{ display: "flex", gap: 1 }}>
-          <Lock sx={{ fontSize: "small", color: colors.green }} /> {/* Changed size to fontSize */}
-          <Typography
-            variant="body2"
-            sx={{ color: colors.green }}
-            gutterBottom
-          >
-            All data will be encrypted
+          <Lock sx={{ fontSize: "small", color: colors.green, mt: 0.5 }} />
+          <Typography variant="body2" sx={{ color: colors.green }} gutterBottom>
+            All data is encrypted
           </Typography>
         </Box>
       </Box>
 
       {/* Payment Methods List */}
-      {paymentMethods.map((method) => (
-        <Box
-          key={method.id}
-          sx={{
-            p: 2,
-            border: "1px solid",
-            borderColor: "grey.300",
-            borderRadius: 1,
-            mb: 2,
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-            <Typography variant="body1">{method.type}</Typography>
-            <Box>
-              <Typography variant="body1">{method.cardNumber}</Typography>
-              <Typography variant="body2" color="grey.500">
-                {method.name}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          gap: 2,
+          mb: 3,
+        }}
+      >
+        {paymentMethods.map((method) => (
+          <Box
+            key={method.id}
+            sx={{
+              p: 2,
+              border: "1px solid",
+              borderColor: "grey.300",
+              borderRadius: 1,
+              width: { md: 250, xs: "100%" }, // Fixed width for cards on medium screens
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+            }}
+          >
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+              <Typography variant="body1">{method.type}</Typography>
+              <Box
+                component="img"
+                src="https://static-00.iconduck.com/assets.00/mastercard-icon-2048x1587-tygju446.png"
+                alt="Mastercard"
+                sx={{ width: 24, height: 18 }}
+              />
+            </Box>
+            <Typography variant="body1" sx={{ mt: 1 }}>
+              {method.cardNumber}
+            </Typography>
+            <Typography variant="body2" color="grey.500" sx={{ mt: 1 }}>
+              {method.name}
+            </Typography>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 2 }}>
+              <Checkbox
+                checked={method.isDefault}
+                onChange={() => handleSetDefault(method.id)}
+              />
+              <Typography
+                variant="body2"
+                color={method.isDefault ? "primary" : "grey.500"}
+              >
+                {method.isDefault ? "Default" : "Default"}
               </Typography>
+              <IconButton
+                onClick={() => console.log("Edit card", method.id)}
+                size="small"
+              >
+                <Edit />
+              </IconButton>
+              <IconButton onClick={() => handleDelete(method.id)} size="small">
+                <Delete color="error" />
+              </IconButton>
             </Box>
           </Box>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <Checkbox
-              checked={method.isDefault}
-              onChange={() => handleSetDefault(method.id)}
-            />
-            <Typography
-              variant="body2"
-              color={method.isDefault ? "primary" : "grey.500"}
-            >
-              {method.isDefault ? "Default" : "Set as default"}
-            </Typography>
-            <IconButton
-              onClick={() => console.log("Edit card", method.id)}
-              size="small"
-            >
-              <Edit />
-            </IconButton>
-            <IconButton onClick={() => handleDelete(method.id)} size="small">
-              <Delete color="error" />
-            </IconButton>
-          </Box>
-        </Box>
-      ))}
+        ))}
+      </Box>
 
-      {/* Add New Card Section */}
-      <Divider sx={{ my: 3 }} />
-      <Box sx={{ textAlign: "center" }}>
-        <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
-          <Typography variant="body1" color="grey.500">
-            Save cards for faster checkout
+      {/* Save Cards Section */}
+      <Box sx={{ textAlign: "center", mb: 3 }}>
+        
+        <Typography variant="body1" color={colors.black}>
+          Save cards for faster checkout
+        </Typography>
+        <Box sx={{ display: "flex", justifyContent: "center", gap: 1, mt: 1 }}>
+          <Verified sx={{ fontSize: "small", color: colors.green , mt:0.7}} />
+          <Typography variant="body2" color={colors.textGray}>
+            Secure Payment
           </Typography>
         </Box>
+      </Box>
+
+      {/* Add New Card Button */}
+      <Box sx={{ textAlign: "center", mb: 3 }}>
         <Button
           variant="contained"
           onClick={handleOpenDialog}
           sx={{
             bgcolor: "#ffcc00",
-            color: "black",
+            color: colors.black,
             "&:hover": { bgcolor: "#e6b800" },
-            mb: 2,
           }}
         >
           + Add a credit or debit card
         </Button>
-        <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
-          <Typography variant="body2" color="grey.500">
-            Visa
-          </Typography>
-          <Typography variant="body2" color="grey.500">
-            Mastercard
-          </Typography>
-          <Typography variant="body2" color="grey.500">
-            PayPal
-          </Typography>
-        </Box>
+      </Box>
+
+      {/* Supported Payment Logos */}
+      <Box sx={{ display: "flex", justifyContent: "center", gap: 2, mb: 2 }}>
+        <Box
+          component="img"
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRk-JdvERxNmetMNVTdalsk51FtT7FT3HOf6A&s"
+          alt="Visa"
+          sx={{ width: 40, height: 30 }}
+        />
+        <Box
+          component="img"
+          src="https://static-00.iconduck.com/assets.00/mastercard-icon-2048x1587-tygju446.png"
+          alt="Mastercard"
+          sx={{ width: 40, height: 30 }}
+        />
+        <Box
+          component="img"
+          src="https://1000logos.net/wp-content/uploads/2017/05/Color-Paypal-Logo.jpg"
+          alt="PayPal"
+          sx={{ width: 40, height: 30 }}
+        />
+        <Box
+          component="img"
+          src="https://static-00.iconduck.com/assets.00/maestro-icon-512x396-vptgxibs.png"
+          alt="Maestro"
+          sx={{ width: 40, height: 30 }}
+        />
       </Box>
 
       {/* Dialog for adding new card */}
@@ -198,9 +232,7 @@ export default function PaymentMethodsPage() {
           <TextField
             label="Card Type"
             value={newCard.type}
-            onChange={(e) =>
-              setNewCard({ ...newCard, type: e.target.value })
-            }
+            onChange={(e) => setNewCard({ ...newCard, type: e.target.value })}
             fullWidth
             sx={{ mb: 2, mt: 1 }}
           />
@@ -216,9 +248,7 @@ export default function PaymentMethodsPage() {
           <TextField
             label="Name on Card"
             value={newCard.name}
-            onChange={(e) =>
-              setNewCard({ ...newCard, name: e.target.value })
-            }
+            onChange={(e) => setNewCard({ ...newCard, name: e.target.value })}
             fullWidth
             sx={{ mb: 2 }}
           />
@@ -229,7 +259,11 @@ export default function PaymentMethodsPage() {
             variant="contained"
             onClick={handleAddCard}
             disabled={!newCard.type || !newCard.cardNumber || !newCard.name}
-            sx={{ bgcolor: "#ffcc00", color: "black", "&:hover": { bgcolor: "#e6b800" } }}
+            sx={{
+              bgcolor: "#ffcc00",
+              color: "black",
+              "&:hover": { bgcolor: "#e6b800" },
+            }}
           >
             Add Card
           </Button>
