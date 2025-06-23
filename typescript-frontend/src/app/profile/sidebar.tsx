@@ -1,6 +1,6 @@
 "use client";
 import { Box, Typography, List, ListItem, ListItemText } from "@mui/material";
-import { Poppins, Inter } from "next/font/google";
+import { Poppins } from "next/font/google";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -11,12 +11,6 @@ const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   variable: "--font-poppins",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-inter",
 });
 
 const Sidebar = () => {
@@ -33,25 +27,28 @@ const Sidebar = () => {
     },
     {
       section: "My Orders",
-      items: [
-        { label: "My Returns", href: "/profile/returns" },
-        { label: "My Cancellations", href: "/profile/cancellations" },
-      ],
+      items: [], href: "/profile/orders"
     },
     {
       section: "My Wishlist",
-      items: [{ label: "Wishlist", href: "/profile/wishlist" }],
+      items: [], href: "/profile/my-wishlist"
+    },
+    {
+      section: "My Reviews",
+      items: [], href: "/profile/my-reviews"
     },
   ];
 
   return (
-    <Box className={poppins.className}
+    <Box
+      className={poppins.className}
       sx={{
         width: "100%",
         p: 2,
         pl: 5,
-        overflowX: "hidden", // Prevent horizontal scroll
-        boxSizing: "border-box", // Ensure padding doesn't cause overflow
+        mb: 2,
+        overflowX: "hidden",
+        boxSizing: "border-box",
       }}
     >
       {/* Breadcrumb */}
@@ -59,7 +56,6 @@ const Sidebar = () => {
         <Link href="/" passHref>
           <Typography
             sx={{
-              
               fontSize: "14px",
               color: "text.secondary",
               textDecoration: "none",
@@ -74,7 +70,6 @@ const Sidebar = () => {
         </Link>
         <Typography
           sx={{
-            fontFamily: "Poppins",
             fontSize: "14px",
             color: "text.secondary",
           }}
@@ -83,7 +78,6 @@ const Sidebar = () => {
         </Typography>
         <Typography
           sx={{
-            fontFamily: "Poppins",
             fontSize: "14px",
             color: "text.primary",
             overflow: "hidden",
@@ -97,53 +91,81 @@ const Sidebar = () => {
 
       {/* Navigation Items */}
       {navItems.map((section, index) => (
-        <Box key={index} sx={{ mb: 3 }}>
-          <Typography
-            sx={{
-              fontFamily: "Poppins",
-              fontSize: "16px",
-              fontWeight: "medium",
-              color: "text.primary",
-              mb: 1,
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-            }}
-          >
-            {section.section}
-          </Typography>
-          <List sx={{ p: 0 }}>
-            {section.items.map((item, idx) => (
-              item.label && (
-                <ListItem
-                  key={idx}
-                  component={Link}
-                  href={item.href}
-                  sx={{
-                    p: 0,
-                    mb: 1,
-                    pl:3,
-                    "&:hover": { bgcolor: "action.hover" },
-                  }}
-                >
-                  <ListItemText
-                    primary={item.label}
-                    primaryTypographyProps={{
-                      sx: {
-                        fontFamily: "Poppins",
-                        fontSize: "16px",
-                        color:
-                          pathname === item.href ? colors.primary : "text.secondary",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                      },
+        <Box key={index}>
+          {section.items.length === 0 ? (
+            <ListItem
+              component={Link}
+              href={section.href || "#"} // Default to "#" if no href
+              sx={{
+                p: 0,
+                "&:hover": { backgroundColor: "action.hover" },
+                ...(pathname === section.href && {
+                  "& .MuiTypography-root": { color: colors.primary },
+                }),
+              }}
+            >
+              <ListItemText
+                primary={section.section}
+                primaryTypographyProps={{
+                  sx: {
+                    fontSize: "16px",
+                    fontWeight: 500,
+                    color: pathname === section.href ? colors.primary : "text.primary",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  },
+                }}
+              />
+            </ListItem>
+          ) : (
+            <>
+              <Typography
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 500,
+                  color: "text.primary",
+                  mb: 1,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {section.section}
+              </Typography>
+              <List sx={{ p: 0 }}>
+                {section.items.map((item, idx) => (
+                  <ListItem
+                    key={idx}
+                    component={Link}
+                    href={item.href}
+                    sx={{
+                      p: 0,
+                      mb: 0.5,
+                      pl: 2,
+                      "&:hover": { backgroundColor: "action.hover" },
+                      ...(pathname === item.href && {
+                        "& .MuiTypography-root": { color: colors.primary },
+                      }),
                     }}
-                  />
-                </ListItem>
-              )
-            ))}
-          </List>
+                  >
+                    <ListItemText
+                      primary={item.label}
+                      primaryTypographyProps={{
+                        sx: {
+                          fontSize: "14px",
+                          color: pathname === item.href ? colors.primary : "text.secondary",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        },
+                      }}
+                    />
+                  </ListItem>
+                ))}
+              </List>
+            </>
+          )}
         </Box>
       ))}
     </Box>
