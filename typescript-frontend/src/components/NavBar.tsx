@@ -33,6 +33,7 @@ import {
   StarOutline,
   LogoutOutlined,
 } from "@mui/icons-material";
+import Banner from "./Banner";
 
 const Navbar: React.FC = () => {
   const theme = useTheme();
@@ -94,25 +95,27 @@ const Navbar: React.FC = () => {
 
   return (
     <>
+    <Banner/>
       <AppBar
         position="fixed"
         sx={{
           bgcolor: colors.white,
-          px: { xs: 2, sm: 3, md: 4 },
-          py: 1,
+          // px: { xs: 2, sm: 3, md: 4 },
+          // py: 1,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          minHeight: "80px",
+          minHeight: "70px",
         }}
         elevation={0}
       >
+        <Banner/>
         <Toolbar
           sx={{
             justifyContent: "space-between",
-            flexWrap: "wrap",
+            flexWrap: "wrap", px: { xs: 2, sm: 3, md: 4 },
             rowGap: 2,
-            px: { xs: 0, md: 1 },
+            // px: { xs: 0, md: 1 },
           }}
         >
           <Typography
