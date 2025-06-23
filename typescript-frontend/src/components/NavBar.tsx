@@ -230,7 +230,7 @@ const Navbar: React.FC = () => {
         </Toolbar>
       </AppBar>
 
-      <Box sx={{ mt: "80px" }}>
+      <Box sx={{ mt: "70px" }}>
         <Divider sx={{ borderColor: colors.gray }} />
       </Box>
 
