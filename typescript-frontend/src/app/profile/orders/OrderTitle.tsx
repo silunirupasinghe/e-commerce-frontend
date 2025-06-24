@@ -22,7 +22,8 @@ import {
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CloseIcon from '@mui/icons-material/Close';
 import { OrderType } from '../../../data/mockOrders';
-
+import colors from '@/theme/color';
+import { color } from 'chart.js/helpers';
 type Props = {
   order: OrderType;
 };
@@ -45,7 +46,7 @@ const OrderTile: React.FC<Props> = ({ order }) => {
   return (
     <Box
       sx={{
-        bgcolor: '#fff',
+        bgcolor: colors.white,
         borderRadius: 2,
         p: { xs: 2, sm: 3 },
         boxShadow: '0 2px 6px rgba(0,0,0,0.05)',
@@ -63,7 +64,7 @@ const OrderTile: React.FC<Props> = ({ order }) => {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          bgcolor: '#f3f3f3',
+          bgcolor: colors.lightGray,
           px: 2,
           py: 1,
           borderRadius: 1,
@@ -74,7 +75,7 @@ const OrderTile: React.FC<Props> = ({ order }) => {
         }}
       >
         <Typography fontWeight={600}>{order.status}</Typography>
-        <Typography sx={{ color: '#fbbc04', fontWeight: 500, fontSize: '0.9rem' }}>
+        <Typography sx={{ color: colors.primary, fontWeight: 500, fontSize: '0.9rem' }}>
           View Order Details
         </Typography>
       </Box>
@@ -100,7 +101,6 @@ const OrderTile: React.FC<Props> = ({ order }) => {
                 height: 80,
                 objectFit: 'cover',
                 borderRadius: 1,
-                border: '1px solid #eee',
               }}
             />
           ))}
@@ -117,8 +117,8 @@ const OrderTile: React.FC<Props> = ({ order }) => {
             variant="contained"
             onClick={() => setOpenTrack(true)}
             sx={{
-              bgcolor: '#fbbc04',
-              color: '#000',
+              bgcolor: colors.primary,
+              color: colors.black,
               fontWeight: 600,
               borderRadius: '999px',
               textTransform: 'none',
@@ -133,11 +133,11 @@ const OrderTile: React.FC<Props> = ({ order }) => {
               borderRadius: '999px',
               textTransform: 'none',
               width: { xs: '100%', sm: 160 },
-              color: '#5b5b5b',
-              borderColor: '#5b5b5b',
+              color: colors.textGray,
+              borderColor: colors.textGray,
               '&:hover': {
-                borderColor: '#000',
-                backgroundColor: '#f5f5f5',
+                borderColor: colors.black,
+                backgroundColor: colors.lightGray,
               }, 
             }}
           >
@@ -150,11 +150,11 @@ const OrderTile: React.FC<Props> = ({ order }) => {
               borderRadius: '999px',
               textTransform: 'none',
               width: { xs: '100%', sm: 160 },
-              color: '#5b5b5b',
-              borderColor: '#5b5b5b',
+              color: colors.textGray,
+              borderColor: colors.textGray,
               '&:hover': {
-                borderColor: '#000',
-                backgroundColor: '#f5f5f5',
+                borderColor: colors.black,
+                backgroundColor: colors.lightGray,
               },
             }}
           >
@@ -171,7 +171,7 @@ const OrderTile: React.FC<Props> = ({ order }) => {
         justifyContent="space-between"
         flexWrap="wrap"
         fontSize="0.95rem"
-        color="#444"
+        color= {colors.black}
       >
         <span>Total : <strong>${order.total}</strong></span>
         <span>Order Time: <strong>{order.date}</strong></span>
@@ -180,7 +180,7 @@ const OrderTile: React.FC<Props> = ({ order }) => {
 
       {/* Expanded Section */}
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <Box sx={{ mt: 3, px: 2, py: 2, bgcolor: '#fafafa', borderRadius: 1 }}>
+        <Box sx={{ mt: 3, px: 2, py: 2, bgcolor: colors.lightGray, borderRadius: 1 }}>
           <Typography fontWeight={600} mb={1}>Items Ordered</Typography>
           <Stack spacing={1} mb={2}>
             {order.items.map((item, i) => (
@@ -215,13 +215,13 @@ const OrderTile: React.FC<Props> = ({ order }) => {
               variant="outlined"
               size="small"
               sx={{
-                color: '#5b5b5b',
-                borderColor: '#5b5b5b',
+                color: colors.textGray,
+                borderColor: colors.textGray,
                 textTransform: 'none',
                 fontWeight: 500,
                 '&:hover': {
-                  borderColor: '#5b5b5b',
-                  backgroundColor: '#f2f2f2',
+                  borderColor: colors.black,
+                  backgroundColor: colors.lightGray,
                 },
               }}
             >
@@ -231,13 +231,13 @@ const OrderTile: React.FC<Props> = ({ order }) => {
               variant="outlined"
               size="small"
               sx={{
-                color: '#5b5b5b',
-                borderColor: '#5b5b5b',
+                color: colors.textGray,
+                borderColor: colors.textGray,
                 textTransform: 'none',
                 fontWeight: 500,
                 '&:hover': {
-                  borderColor: '#5b5b5b',
-                  backgroundColor: '#f2f2f2',
+                  borderColor: colors.black,
+                  backgroundColor: colors.lightGray,
                 },
               }}
             >
@@ -247,13 +247,13 @@ const OrderTile: React.FC<Props> = ({ order }) => {
               variant="outlined"
               size="small"
               sx={{
-                color: '#5b5b5b',
-                borderColor: '#5b5b5b',
+                color: colors.textGray,
+                borderColor: colors.textGray,
                 textTransform: 'none',
                 fontWeight: 500,
                 '&:hover': {
-                  borderColor: '#5b5b5b',
-                  backgroundColor: '#f2f2f2',
+                  borderColor: colors.black,
+                  backgroundColor: colors.lightGray,
                 },
               }}
             >
@@ -265,16 +265,16 @@ const OrderTile: React.FC<Props> = ({ order }) => {
 
       {/* Track Dialog */}
       <Dialog open={openTrack} onClose={() => setOpenTrack(false)} fullWidth maxWidth="sm">
-        <Box sx={{ backgroundColor: '#fbbc04', px: 3, py: 2, display: 'flex', justifyContent: 'space-between' }}>
-          <Typography variant="h6" sx={{ fontWeight: 600, color: '#000' }}>
+        <Box sx={{ backgroundColor: colors.primary, px: 3, py: 2, display: 'flex', justifyContent: 'space-between' }}>
+          <Typography variant="h6" sx={{ fontWeight: 600, color: colors.black }}>
             Track Order — {order.id}
           </Typography>
-          <IconButton onClick={() => setOpenTrack(false)} sx={{ color: '#000' }}>
+          <IconButton onClick={() => setOpenTrack(false)} sx={{ color: colors.black }}>
             <CloseIcon />
           </IconButton>
         </Box>
 
-        <DialogContent dividers sx={{ bgcolor: '#f9f9f9' }}>
+        <DialogContent dividers sx={{ bgcolor: colors.lightGray }}>
           <Box sx={{ mb: 3 }}>
             <Typography variant="subtitle2" color="text.secondary" mb={0.5}>
               Carrier
@@ -300,11 +300,11 @@ const OrderTile: React.FC<Props> = ({ order }) => {
                   textTransform: 'none',
                   fontSize: '0.75rem',
                   px: 1.5,
-                  backgroundColor: '#fbbc04',
-                  color: '#000',
+                  backgroundColor: colors.primary,
+                  color: colors.black,
                   fontWeight: 600,
                   '&:hover': {
-                    backgroundColor: '#e0a800',
+                    backgroundColor: colors.primaryShadow,
                   },
                 }}
               >
@@ -336,12 +336,12 @@ const OrderTile: React.FC<Props> = ({ order }) => {
                     key={i}
                     sx={{
                       pl: 2,
-                      borderLeft: `3px solid ${isCompleted ? '#4caf50' : isCurrent ? '#fbbc04' : '#ccc'}`,
+                      borderLeft: `3px solid ${isCompleted ? colors.green : isCurrent ? colors.primary : colors.textGray}`,
                     }}
                   >
                     <Typography
                       variant="body2"
-                      sx={{ fontWeight: isCurrent ? 600 : 400, color: isCurrent ? '#000' : '#555' }}
+                      sx={{ fontWeight: isCurrent ? 600 : 400, color: isCurrent ? colors.black : isCompleted ? colors.black : colors.textGray }}
                     >
                       {step}
                     </Typography>
@@ -352,17 +352,17 @@ const OrderTile: React.FC<Props> = ({ order }) => {
           </Box>
         </DialogContent>
 
-        <DialogActions sx={{ bgcolor: '#f9f9f9' }}>
+        <DialogActions sx={{ bgcolor: colors.lightGray}}>
           <Button 
             onClick={() => setOpenTrack(false)} 
             variant="contained"
             sx={{
-              backgroundColor: '#fbbc04',
-              color: '#000',
+              backgroundColor: colors.primary,
+              color: colors.black,
               fontWeight: 600,
               textTransform: 'none',
               '&:hover': {
-                backgroundColor: '#e0a800',
+                backgroundColor: colors.primaryShadow,
               },
             }}>
             Close
@@ -376,7 +376,7 @@ const OrderTile: React.FC<Props> = ({ order }) => {
         <DialogContent dividers>
           {helpSubmitted ? (
             <Typography color="success.main" variant="body1">
-              ✅ Your return/help request has been submitted.
+              Your return/help request has been submitted.
               <br />You will be contacted within 24 hours.
             </Typography>
           ) : (
@@ -387,13 +387,78 @@ const OrderTile: React.FC<Props> = ({ order }) => {
               <RadioGroup
                 value={helpReason}
                 onChange={(e) => setHelpReason(e.target.value)}
-                sx={{ mb: 2, '& .Mui-checked': {color: '#fbbc04 !important'}, }}
+                sx={{ mb: 2 }}
               >
-                <FormControlLabel value="damaged" control={<Radio />} label="Item arrived damaged" />
-                <FormControlLabel value="wrong" control={<Radio />} label="I received the wrong item" />
-                <FormControlLabel value="return" control={<Radio />} label="I want to return this item" />
-                <FormControlLabel value="missing" control={<Radio />} label="My item never arrived" />
-                <FormControlLabel value="other" control={<Radio />} label="Other" />
+                <FormControlLabel
+                  value="damaged"
+                  control={
+                    <Radio
+                      sx={{
+                        color: colors.textGray,
+                        '&.Mui-checked': {
+                          color: colors.primary,
+                        },
+                      }}
+                    />
+                  }
+                  label="Item arrived damaged"
+                />
+                <FormControlLabel
+                  value="wrong"
+                  control={
+                    <Radio
+                      sx={{
+                        color: colors.textGray,
+                        '&.Mui-checked': {
+                          color: colors.primary,
+                        },
+                      }}
+                    />
+                  }
+                  label="I received the wrong item"
+                />
+                <FormControlLabel
+                  value="return"
+                  control={
+                    <Radio
+                      sx={{
+                        color: colors.textGray,
+                        '&.Mui-checked': {
+                          color: colors.primary,
+                        },
+                      }}
+                    />
+                  }
+                  label="I want to return this item"
+                />
+                <FormControlLabel
+                  value="missing"
+                  control={
+                    <Radio
+                      sx={{
+                        color: colors.textGray,
+                        '&.Mui-checked': {
+                          color: colors.primary,
+                        },
+                      }}
+                    />
+                  }
+                  label="My item never arrived"
+                />
+                <FormControlLabel
+                  value="other"
+                  control={
+                    <Radio
+                      sx={{
+                        color: colors.textGray,
+                        '&.Mui-checked': {
+                          color: colors.primary,
+                        },
+                      }}
+                    />
+                  }
+                  label="Other"
+                />
               </RadioGroup>
 
               <TextField
@@ -406,22 +471,22 @@ const OrderTile: React.FC<Props> = ({ order }) => {
                 onChange={(e) => setHelpMessage(e.target.value)}
                 sx={{
                   '& label.Mui-focused': {
-                    color: '#fbbc04', // Label when focused
+                    color: colors.primary, // Label when focused
                   },
                   '& .MuiOutlinedInput-root': {
                     '& fieldset': {
-                      borderColor: '#ccc', // Default border
+                      borderColor: colors.textGray, // Default border
                     },
                     '&:hover fieldset': {
-                      borderColor: '#fbbc04', // Hover border
+                      borderColor: colors.primary, // Hover border
                     },
                     '&.Mui-focused fieldset': {
-                      borderColor: '#fbbc04', // Focused border
+                      borderColor: colors.primary, // Focused border
                     },
                   },
                   '& .MuiInputBase-input': {
-                    color: '#000', // Text color
-                    caretColor: '#fbbc04', // Blinking cursor
+                    color: colors.black, // Text color
+                    caretColor: colors.primaryShadow, // Blinking cursor
                   },
                 }}
               />
@@ -433,12 +498,12 @@ const OrderTile: React.FC<Props> = ({ order }) => {
             onClick={() => setOpenHelp(false)} 
             variant="contained"
             sx={{
-              backgroundColor: '#fbbc04',
-              color: '#000',
+              backgroundColor: colors.primary,
+              color: colors.black,
               fontWeight: 600,
               textTransform: 'none',
               '&:hover': {
-                backgroundColor: '#e0a800',
+                backgroundColor: colors.primaryShadow,
               },
             }}>
             Cancel
@@ -455,7 +520,7 @@ const OrderTile: React.FC<Props> = ({ order }) => {
                 }, 2000);
               }}
               variant="contained"
-              sx={{ bgcolor: '#fbbc04', color: '#000', fontWeight: 600, textTransform: 'none' }}
+              sx={{ bgcolor: colors.primary, color: colors.black, fontWeight: 600, textTransform: 'none', '&:hover' : {backgroundColor: colors.primaryShadow} }}
               disabled={!helpReason}
             >
               Submit Request

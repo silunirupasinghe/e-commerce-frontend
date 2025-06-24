@@ -1,6 +1,5 @@
 'use client';
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Typography,
@@ -9,12 +8,12 @@ import {
   Paper,
   Tabs,
   Tab,
-  Container,
   useMediaQuery,
   useTheme,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import OrderTile from './OrderTitle';
+import colors from '@/theme/color';
 import mockOrders, { OrderType } from '../../../data/mockOrders';
 
 type TabType = {
@@ -32,27 +31,48 @@ export default function OrdersPage() {
   ];
 
   const [activeTab, setActiveTab] = useState<string>('All');
+  const [searchTerm, setSearchTerm] = useState('');
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const filteredOrders: OrderType[] =
-    activeTab === 'All'
-      ? mockOrders
-      : mockOrders.filter((order: OrderType) => order.status === activeTab);
+  const filteredOrders: OrderType[] = mockOrders
+    .filter((order: OrderType) =>
+      activeTab === 'All' || order.status === activeTab
+    )
+    .filter((order: OrderType) => {
+      const term = searchTerm.trim().toLowerCase();
+      if (!term) return true;
+
+      const idMatch = order.id.toLowerCase().includes(term);
+      const trackingMatch = order.trackingNumber.toLowerCase().includes(term);
+      const itemMatch = order.items.some(item =>
+        item.name.toLowerCase().includes(term)
+      );
+
+      return idMatch || trackingMatch || itemMatch;
+    });
 
   return (
-    <Box sx={{ bgcolor: '#f5f5f5', minHeight: '100vh', py: 4 }}>
-      <Container maxWidth="md">
+    <Box sx={{ bgcolor: colors.white, minHeight: '100vh', p: 0, m: 0 }}>
+      <Box
+        sx={{
+          width: '100%',
+          px: { xs: 2, sm: 4 },
+          boxSizing: 'border-box',
+        }}
+      >
         <Paper
-          elevation={1}
+          elevation={0}
           sx={{
-            backgroundColor: 'white',
+            backgroundColor: colors.white,
             borderRadius: '10px',
             px: { xs: 2, sm: 4 },
             py: { xs: 3, sm: 5 },
-            boxShadow: '0 2px 6px rgba(0, 0, 0, 0.05)',
+            boxShadow: 'none',
+            width: '100%',
           }}
         >
+          {/* Tabs */}
           <Tabs
             value={tabs.findIndex(tab => tab.value === activeTab)}
             onChange={(_, newIndex: number) => setActiveTab(tabs[newIndex].value)}
@@ -64,14 +84,14 @@ export default function OrdersPage() {
               '& .MuiTab-root': {
                 textTransform: 'none',
                 fontSize: '0.95rem',
-                color: '#888',
+                color: colors.textGray,
                 minWidth: 'auto',
                 px: 2,
                 pb: '12px',
-              },
-              '& .Mui-selected': {
-                color: '#000 !important',
-                fontWeight: 600,
+                '&.Mui-selected': {
+                  color: colors.black,
+                  fontWeight: 600,
+                },
               },
               '& .MuiTabs-indicator': {
                 display: 'flex',
@@ -82,8 +102,8 @@ export default function OrdersPage() {
                   content: '""',
                   display: 'block',
                   width: '15px',
-                  height: '4px', // ✅ fixed typo: was '4  px'
-                  backgroundColor: '#000',
+                  height: '4px',
+                  backgroundColor: colors.black,
                   borderRadius: '10px',
                 },
               },
@@ -118,12 +138,12 @@ export default function OrdersPage() {
                 sx={{
                   fontSize: '0.95rem',
                   fontWeight: 500,
-                  color: '#000',
+                  color: colors.black,
                   pr: { xs: '4.5rem', md: '6rem' },
                 }}
               >
                 Welcome!{' '}
-                <Box component="span" sx={{ color: '#fbbc04', fontWeight: 600 }}>
+                <Box component="span" sx={{ color: colors.primary, fontWeight: 600 }}>
                   User
                 </Box>
               </Typography>
@@ -136,14 +156,17 @@ export default function OrdersPage() {
               >
                 <InputBase
                   placeholder="Item name / Order ID / Tracking No."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                   sx={{
                     width: '100%',
-                    padding: '0.6rem 2.2rem 0.6rem 1rem',
-                    border: '1px solid #ccc',
+                    padding: '0.35rem 2rem 0.35rem 1rem',
+                    border: '1px solid',
+                    borderColor: colors.gray,
                     borderRadius: '999px',
-                    backgroundColor: '#fff',
-                    fontSize: '0.95rem',
-                    color: '#333',
+                    backgroundColor: colors.white,
+                    fontSize: '0.9rem',
+                    color: colors.Gray,
                   }}
                 />
                 <SearchIcon
@@ -153,7 +176,7 @@ export default function OrdersPage() {
                     top: '50%',
                     transform: 'translateY(-50%)',
                     fontSize: '1rem',
-                    color: '#000',
+                    color: colors.black,
                     pointerEvents: 'none',
                   }}
                 />
@@ -170,17 +193,16 @@ export default function OrdersPage() {
                 ))}
               </Stack>
             ) : (
-              <Box sx={{ textAlign: 'center', color: '#777', py: 6 }}>
+              <Box sx={{ textAlign: 'center', color: colors.textGray, py: 6 }}>
                 <Box sx={{ fontSize: '3rem', mb: 1 }}>🗒</Box>
-                <Typography sx={{ fontSize: '0.95rem', color: '#888' }}>
-                  No orders in{' '}
-                  <strong>{tabs.find(t => t.value === activeTab)?.label}</strong>. Please{' '}
-                  <Box component="span" sx={{ color: '#000', fontWeight: 600 }}>
-                    switch account
+                <Typography sx={{ fontSize: '0.95rem', color: colors.textGray }}>
+                  No orders found. Please{' '}
+                  <Box component="span" sx={{ color: colors.black, fontWeight: 600 }}>
+                    try another search
                   </Box>{' '}
                   or{' '}
-                  <Box component="span" sx={{ color: '#000', fontWeight: 600 }}>
-                    feedback
+                  <Box component="span" sx={{ color: colors.black, fontWeight: 600 }}>
+                    switch tabs
                   </Box>
                   .
                 </Typography>
@@ -188,7 +210,7 @@ export default function OrdersPage() {
             )}
           </Box>
         </Paper>
-      </Container>
+      </Box>
     </Box>
   );
 }

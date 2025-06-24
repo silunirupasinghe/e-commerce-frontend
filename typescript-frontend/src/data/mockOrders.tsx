@@ -1,4 +1,4 @@
-// src/data/mockOrders.ts
+// src/data/mockOrders.tsx
 
 export type OrderItem = {
   name: string;

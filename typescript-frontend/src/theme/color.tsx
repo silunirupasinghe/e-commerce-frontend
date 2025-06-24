@@ -6,7 +6,8 @@ const colors: Record<string, string> = {
   white: "#ffffff",
   red: "#D01111",
   green:"#01AC45",
-  textGray:"#AAA5A5"
+  textGray:"#AAA5A5",
+  primaryShadow: "#fbbc04"
 };
 
 export default colors;
